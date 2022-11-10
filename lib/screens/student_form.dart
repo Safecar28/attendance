@@ -54,7 +54,7 @@ class _StudentFormState extends ConsumerState<StudentForm> {
         actions: [
           IconButton(
               onPressed: () {
-                final id = widget.id ?? nanoid(7);
+                final id = widget.id ?? studentID();
                 FirebaseDatabase.instance
                     .ref("students/$id")
                     .set({'id': id, 'name': _firstName, 'lastName': _lastName})

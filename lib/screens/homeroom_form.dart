@@ -35,7 +35,7 @@ class _HomeroomFormState extends ConsumerState<HomeroomForm> {
         actions: [
           IconButton(
               onPressed: () {
-                final id = widget.id ?? nanoid(3);
+                final id = widget.id ?? homeroomID();
                 FirebaseDatabase.instance
                     .ref("homerooms/$id/name")
                     .set(_name)
