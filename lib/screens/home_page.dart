@@ -1,37 +1,25 @@
 part of '../main.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerWidget {
   const HomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  final _homerooms = Homeroom.all();
-  final Future<Iterable<Student>> _students = Student.allOnce();
-
-  @override
-  build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.person_add),
-              onPressed: () {},
+  build(context, ref) => ref.watch(homeroomsProvider).when(
+      loading: () => const Wait(),
+      error: (err, stack) => const Wait(),
+      data: (homerooms) {
+        return Scaffold(
+            appBar: AppBar(
+              title: Text(title),
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.person_add),
+                  onPressed: () {},
+                ),
+              ],
             ),
-          ],
-        ),
-        body: StreamBuilder<Iterable<Homeroom>>(
-            stream: _homerooms,
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) return const Wait();
-
-              return HomeroomList(
-                  homerooms: snapshot.data!, students: _students);
-            }));
-  }
+            body: HomeroomList(homerooms: homerooms));
+      });
 }

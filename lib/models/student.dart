@@ -1,5 +1,9 @@
 part of models;
 
+final studentsProvider = FutureProvider<Iterable<Student>>((ref) async {
+  return Student.allOnce();
+});
+
 class Student {
   String id;
   String firstName;

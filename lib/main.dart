@@ -9,7 +9,7 @@ import 'package:intl/intl.dart';
 import 'models/models.dart';
 
 part 'screens/home_page.dart';
-part 'screens/student_page.dart';
+part 'screens/students_page.dart';
 part 'screens/attendance_page.dart';
 
 part 'widgets/homeroom_list.dart';

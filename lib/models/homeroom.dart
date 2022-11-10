@@ -1,9 +1,20 @@
 part of models;
 
+final homeroomProvider = StreamProvider.family<Homeroom, String>((ref, id) {
+  return FirebaseDatabase.instance
+      .ref('homerooms/$id')
+      .onValue
+      .map((event) => Homeroom.fromDSRead(event.snapshot, ref.read));
+});
+
+final homeroomsProvider =
+    StreamProvider<Iterable<Homeroom>>((ref) => Homeroom.all());
+
 class Homeroom {
   String id;
   String name;
   Iterable<String> studentIds;
+  Reader? read;
 
   Homeroom({this.id = '', this.name = '', this.studentIds = const []});
 
@@ -15,15 +26,20 @@ class Homeroom {
         studentIds: (list.map((e) => e as String)));
   }
 
+  factory Homeroom.fromDSRead(DataSnapshot data, Reader read) {
+    final h = Homeroom.fromDS(data);
+    h.read = read;
+    return h;
+  }
+
   static Stream<Iterable<Homeroom>> all() {
     return FirebaseDatabase.instance.ref('homerooms').onValue.map(
         (event) => event.snapshot.children.map((ds) => Homeroom.fromDS(ds)));
   }
 
-  static Stream<Homeroom> single(String id) {
-    return FirebaseDatabase.instance
-        .ref('homerooms/$id')
-        .onValue
-        .map((event) => Homeroom.fromDS(event.snapshot));
+  Future<Iterable<Student>> students() async {
+    if (read == null) return [];
+    final students = await read!(studentsProvider.future);
+    return students.where((std) => studentIds.any((id) => id == std.id));
   }
 }
