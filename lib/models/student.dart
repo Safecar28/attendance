@@ -11,7 +11,9 @@ class Student {
         lastName: (data.child('lastName').value as String));
   }
 
-  String name() {
-    return "$firstName  $lastName";
+  static Iterable<Student> fromDBRef(DatabaseReference ref) {
+    return const [];
   }
+
+  String name() => "$firstName  $lastName";
 }

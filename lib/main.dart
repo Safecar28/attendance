@@ -29,11 +29,11 @@ class AttendanceApp extends StatelessWidget {
   @override
   build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'COIS Attendance',
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: const HomePage(title: 'Home Page'),
+      home: const HomePage(title: 'Homerooms'),
     );
   }
 }
@@ -48,39 +48,35 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _counter = 0;
+  Iterable<Homeroom> _homerooms = [];
+  final _db = FirebaseDatabase.instance.ref('homerooms');
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
+  @override
+  void initState() {
+    super.initState();
+    _db.onValue.listen((event) {
+      setState(() {
+        _homerooms = event.snapshot.children.map((e) => Homeroom.fromDSS(e));
+      });
     });
   }
 
   @override
   build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+        appBar: AppBar(
+          title: Text(widget.title),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+        body: ListView.builder(
+            itemCount: _homerooms.length,
+            itemBuilder: (context, index) {
+              final homeroom = _homerooms.elementAt(index);
+              return ListTile(
+                title: Text(homeroom.name),
+                subtitle: Text(homeroom.studentIds.length.toString()),
+              );
+            })
+        // This trailing comma makes auto-formatting nicer for build methods.
+        );
   }
 }
