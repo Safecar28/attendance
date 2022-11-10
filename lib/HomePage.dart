@@ -11,15 +11,23 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Iterable<Homeroom> _homerooms = [];
+  Iterable<Student> _students = [];
   late StreamSubscription<DatabaseEvent> _homeroomsSub;
-  final _db = FirebaseDatabase.instance.ref('homerooms');
+  late StreamSubscription<DatabaseEvent> _studentsSub;
 
   @override
   void initState() {
     super.initState();
-    _homeroomsSub = _db.onValue.listen((event) {
+    _homeroomsSub =
+        FirebaseDatabase.instance.ref('homerooms').onValue.listen((event) {
       setState(() {
         _homerooms = event.snapshot.children.map((e) => Homeroom.fromDSS(e));
+      });
+    });
+    _studentsSub =
+        FirebaseDatabase.instance.ref('students').onValue.listen((event) {
+      setState(() {
+        _students = event.snapshot.children.map((e) => Student.fromDSS(e));
       });
     });
   }
@@ -28,6 +36,7 @@ class _HomePageState extends State<HomePage> {
   void deactivate() {
     super.deactivate();
     _homeroomsSub.cancel();
+    _studentsSub.cancel();
   }
 
   @override
@@ -49,7 +58,7 @@ class _HomePageState extends State<HomePage> {
                       MaterialPageRoute(
                           builder: (context) => StudentPage(
                                 homeroomId: homeroom.id,
-                                studentIds: homeroom.studentIds,
+                                allStudents: _students,
                               )));
                 },
               );

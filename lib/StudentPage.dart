@@ -4,38 +4,23 @@ class StudentPage extends StatefulWidget {
   const StudentPage({
     Key? key,
     required this.homeroomId,
-    required this.studentIds,
+    required this.allStudents,
   }) : super(key: key);
 
   final String homeroomId;
-  final Iterable<String> studentIds;
+  final Iterable<Student> allStudents;
 
   @override
   createState() => _StudentPageState();
 }
 
 class _StudentPageState extends State<StudentPage> {
-  Iterable<Student> _allStudents = [];
-  late Homeroom _homeroom;
-  late StreamSubscription<DatabaseEvent> _studentsSub;
-  late StreamSubscription<DatabaseEvent> _studentChangeSub;
+  late Homeroom _homeroom = Homeroom();
   late StreamSubscription<DatabaseEvent> _homeroomSub;
-  final _db = FirebaseDatabase.instance.ref('students');
 
   @override
   void initState() {
     super.initState();
-    _studentsSub = _db.onValue.listen((event) {
-      setState(() {
-        _allStudents = event.snapshot.children.map((e) => Student.fromDSS(e));
-      });
-    });
-    _studentChangeSub = _db.onChildChanged.listen((event) {
-      _allStudents = _allStudents.map((e) {
-        if (event.snapshot.key != e.id) return e;
-        return Student.fromDSS(event.snapshot);
-      });
-    });
     _homeroomSub = FirebaseDatabase.instance
         .ref('homerooms/${widget.homeroomId}')
         .onValue
@@ -49,14 +34,12 @@ class _StudentPageState extends State<StudentPage> {
   @override
   void deactivate() {
     super.deactivate();
-    _studentsSub.cancel();
-    _studentChangeSub.cancel();
     _homeroomSub.cancel();
   }
 
   @override
   build(BuildContext context) {
-    var students = _allStudents
+    var students = widget.allStudents
         .where((std) => _homeroom.studentIds.any((id) => id == std.id));
     return Scaffold(
         appBar: AppBar(
