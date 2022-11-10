@@ -29,9 +29,9 @@ class AttendanceApp extends StatelessWidget {
     return MaterialApp(
       title: 'COIS Attendance',
       theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
+        primarySwatch: Colors.blueGrey,
       ),
-      home: const HomePage(title: 'Homerooms'),
+      home: const HomePage(title: 'COIS'),
     );
   }
 }

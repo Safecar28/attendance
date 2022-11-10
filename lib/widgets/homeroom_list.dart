@@ -47,13 +47,11 @@ class HomeroomCard extends StatelessWidget {
   final ListTile child;
 
   @override
-  Widget build(BuildContext context) {
-    return Card(
-        key: key,
-        shadowColor: Colors.lightGreenAccent,
-        clipBehavior: Clip.antiAlias,
-        surfaceTintColor: Colors.deepPurpleAccent,
-        elevation: 1,
-        child: child);
-  }
+  Widget build(BuildContext context) => Card(
+      key: key,
+      shadowColor: Theme.of(context).primaryColor,
+      clipBehavior: Clip.antiAlias,
+      surfaceTintColor: Theme.of(context).colorScheme.background,
+      elevation: 0.9,
+      child: child);
 }
