@@ -50,5 +50,5 @@ final homeroomsProvider =
     StreamProvider<Iterable<Homeroom>>((ref) => Homeroom.all());
 
 String homeroomID() {
-  return customAlphabet('1234567890-', 7);
+  return customAlphabet(nanoIdChars, 3);
 }

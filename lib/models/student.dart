@@ -46,5 +46,5 @@ class Student {
 }
 
 String studentID() {
-  return customAlphabet('1234567890-', 12);
+  return customAlphabet(nanoIdChars, 7);
 }
