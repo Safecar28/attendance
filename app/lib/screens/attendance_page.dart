@@ -12,17 +12,19 @@ class AttendancePage extends ConsumerWidget {
   @override
   Widget build(context, ref) {
     final s = student;
-    final att = ref.watch(currentAttendance);
+    var att = ref.watch(currentAttendance);
+    final ratt = ref.read(currentAttendance.notifier);
     final date = ref.watch(currentDate);
     final attRadios = AttendanceType.values.map((e) => ListTile(
           title: Text(e.name),
+          onTap: () {
+            ratt.state = e;
+          },
           leading: Radio<AttendanceType>(
             value: e,
             groupValue: att,
-            onChanged: (AttendanceType? value) {
-              ref
-                  .read(currentAttendance.notifier)
-                  .update((state) => value ?? att);
+            onChanged: (v) {
+              ratt.state = v ?? e;
             },
           ),
         ));
