@@ -1,8 +1,17 @@
+import 'package:attendance/firebase_options.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+
+import 'models/models.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const AttendanceApp());
+  final database = FirebaseDatabase.instance.ref('homerooms/dp1');
+  final dp1 = Homeroom.fromDSS(await database.get());
+  print("${dp1.name} has ${dp1.studentIds.length} students!");
 }
 
 class AttendanceApp extends StatelessWidget {

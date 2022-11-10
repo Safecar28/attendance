@@ -54,6 +54,8 @@ class DefaultFirebaseOptions {
     appId: '1:726228436483:android:4a40bfae5581bfc4837036',
     messagingSenderId: '726228436483',
     projectId: 'attendance-653e9',
+    databaseURL:
+        'https://attendance-653e9-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'attendance-653e9.appspot.com',
   );
 
@@ -62,6 +64,8 @@ class DefaultFirebaseOptions {
     appId: '1:726228436483:ios:0ff01c0a15c34940837036',
     messagingSenderId: '726228436483',
     projectId: 'attendance-653e9',
+    databaseURL:
+        'https://attendance-653e9-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'attendance-653e9.appspot.com',
     iosClientId:
         '726228436483-fcbujt4kj67t1dpdppfq0sc641nt6bh7.apps.googleusercontent.com',
