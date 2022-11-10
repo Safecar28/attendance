@@ -24,7 +24,7 @@ class AttendancePage extends ConsumerWidget {
             value: e,
             groupValue: att,
             onChanged: (v) {
-              ratt.state = v ?? e;
+              ratt.state = v!;
             },
           ),
         ));
