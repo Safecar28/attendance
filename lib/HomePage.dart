@@ -32,11 +32,14 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  @override
-  void deactivate() {
-    super.deactivate();
-    _homeroomsSub.cancel();
-    _studentsSub.cancel();
+  void _handleTap(String id) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => StudentPage(
+                  homeroomId: id,
+                  allStudents: _students,
+                )));
   }
 
   @override
@@ -52,18 +55,17 @@ class _HomePageState extends State<HomePage> {
               return ListTile(
                 title: Text(homeroom.name),
                 subtitle: Text("${homeroom.studentIds.length} students"),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => StudentPage(
-                                homeroomId: homeroom.id,
-                                allStudents: _students,
-                              )));
-                },
+                onTap: () => _handleTap(homeroom.id),
               );
             })
         // This trailing comma makes auto-formatting nicer for build methods.
         );
+  }
+
+  @override
+  void deactivate() {
+    super.deactivate();
+    _homeroomsSub.cancel();
+    _studentsSub.cancel();
   }
 }
