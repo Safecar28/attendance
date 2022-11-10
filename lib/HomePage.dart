@@ -11,16 +11,23 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Iterable<Homeroom> _homerooms = [];
+  late StreamSubscription<DatabaseEvent> _homeroomsSub;
   final _db = FirebaseDatabase.instance.ref('homerooms');
 
   @override
   void initState() {
     super.initState();
-    _db.onValue.listen((event) {
+    _homeroomsSub = _db.onValue.listen((event) {
       setState(() {
         _homerooms = event.snapshot.children.map((e) => Homeroom.fromDSS(e));
       });
     });
+  }
+
+  @override
+  void deactivate() {
+    super.deactivate();
+    _homeroomsSub.cancel();
   }
 
   @override
