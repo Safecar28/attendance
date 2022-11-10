@@ -52,6 +52,12 @@ class Student {
   }
 
   String name() => '$firstName  $lastName';
+
+  @override
+  int get hashCode => Object.hash(id, id);
+
+  @override
+  bool operator ==(Object other) => other is Student && other.id == id;
 }
 
 String studentID() {

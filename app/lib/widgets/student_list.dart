@@ -45,7 +45,9 @@ class StudentList extends ConsumerWidget {
                       context,
                       MaterialPageRoute<Widget>(
                           fullscreenDialog: true,
-                          builder: (context) => const AttendancePage()));
+                          builder: (context) => AttendancePage(
+                                students: students.toList(),
+                              )));
                 },
                 onLongPress: () {
                   Navigator.push(

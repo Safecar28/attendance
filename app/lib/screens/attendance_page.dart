@@ -11,7 +11,17 @@ final currentStudent = StateProvider<Student>((ref) {
 class AttendancePage extends ConsumerWidget {
   const AttendancePage({
     Key? key,
+    required this.students,
   }) : super(key: key);
+
+  final List<Student> students;
+
+  void navigateTo(Student s, int p, WidgetRef ref) {
+    final idx = students.indexOf(s) + p;
+    if (idx >= 0 && idx < students.length) {
+      ref.read(currentStudent.notifier).update((state) => students[idx]);
+    }
+  }
 
   @override
   Widget build(context, ref) {
@@ -38,7 +48,7 @@ class AttendancePage extends ConsumerWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const Center(child: CurrentDate()),
+            const CurrentDate(),
             ...choices,
             if (state.status == AttendanceType.excused) ...[
               const Divider(),
@@ -47,19 +57,18 @@ class AttendancePage extends ConsumerWidget {
             const Divider(),
             AttendanceDisplay(student: student, att: state),
             ButtonBar(
-              layoutBehavior: ButtonBarLayoutBehavior.padded,
               alignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         primary: Colors.red, minimumSize: const Size(100, 40)),
-                    onPressed: () {},
+                    onPressed: () => navigateTo(student, -1, ref),
                     child: const Text('Previous')),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         primary: Colors.green,
                         minimumSize: const Size(100, 40)),
-                    onPressed: () {},
+                    onPressed: () => navigateTo(student, 1, ref),
                     child: const Text('Next'))
               ],
             )
