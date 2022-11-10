@@ -62,5 +62,5 @@ final homeroomsProvider =
     StreamProvider<Iterable<Homeroom>>((ref) => Homeroom.all());
 
 String homeroomID() {
-  return "hr-${DateTime.now().millisecondsSinceEpoch}";
+  return 'hr-${DateTime.now().millisecondsSinceEpoch}';
 }

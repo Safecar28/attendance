@@ -12,10 +12,10 @@ class StudentList extends StatelessWidget {
   final Homeroom homeroom;
   final void Function() add;
 
-  addStudent(context) {
+  void addStudent(BuildContext context) {
     Navigator.push(
         context,
-        MaterialPageRoute(
+        MaterialPageRoute<Widget>(
             fullscreenDialog: true,
             builder: (context) => StudentForm(homeroom: homeroom)));
   }
@@ -42,7 +42,7 @@ class StudentList extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                       context,
-                      MaterialPageRoute(
+                      MaterialPageRoute<Widget>(
                           fullscreenDialog: true,
                           builder: (context) => AttendancePage(
                                 student: student,
@@ -51,7 +51,7 @@ class StudentList extends StatelessWidget {
                 onLongPress: () {
                   Navigator.push(
                       context,
-                      MaterialPageRoute(
+                      MaterialPageRoute<Widget>(
                           fullscreenDialog: true,
                           builder: (context) => StudentForm(
                                 homeroom: homeroom,
@@ -92,7 +92,7 @@ class EmptyListMessage extends StatelessWidget {
         ),
         Center(
           child: ElevatedButton(
-              onPressed: onPressed, child: Text("Add your first $name")),
+              onPressed: onPressed, child: Text('Add your first $name')),
         )
       ],
     );

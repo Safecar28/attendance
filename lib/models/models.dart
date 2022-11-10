@@ -6,5 +6,6 @@ import 'package:nanoid/nanoid.dart';
 
 part 'homeroom.dart';
 part 'student.dart';
+part 'attendance.dart';
 
 const nanoIdChars = 'abcdeghijklmnopqrstuvwyz';

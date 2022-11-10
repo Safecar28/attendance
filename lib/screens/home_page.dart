@@ -9,7 +9,7 @@ class HomePage extends ConsumerWidget {
     return () {
       Navigator.push(
           context,
-          MaterialPageRoute(
+          MaterialPageRoute<Widget>(
               fullscreenDialog: true,
               builder: (context) => const HomeroomForm()));
     };

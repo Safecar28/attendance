@@ -40,7 +40,7 @@ class _StudentFormState extends ConsumerState<StudentForm> {
     });
   }
 
-  void Function() _removeStudent(context) {
+  void Function() _removeStudent(BuildContext context) {
     return () {
       widget.student!
           .removeFrom(widget.homeroom)
@@ -53,7 +53,7 @@ class _StudentFormState extends ConsumerState<StudentForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(editing ? "Edit $_firstName $_lastName" : "Add Student"),
+        title: Text(editing ? 'Edit $_firstName $_lastName' : 'Add Student'),
         actions: [
           IconButton(
               onPressed: () {
@@ -85,7 +85,7 @@ class _StudentFormState extends ConsumerState<StudentForm> {
                     onPressed: _removeStudent(context),
                     style: deleteButtonStyle,
                     child:
-                        Text("Remove $_firstName from ${widget.homeroom.name}"),
+                        Text('Remove $_firstName from ${widget.homeroom.name}'),
                   )
                 : const SizedBox(),
           ],

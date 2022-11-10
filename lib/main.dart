@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-import 'models/models.dart';
+import 'package:attendance/models/models.dart';
 
 part 'screens/home_page.dart';
 part 'screens/students_page.dart';
@@ -28,7 +28,7 @@ void main() async {
     await Firebase.initializeApp(
         name: 'Attendances', options: DefaultFirebaseOptions.currentPlatform);
     FirebaseDatabase.instance.databaseURL =
-        "https://attendance-653e9-default-rtdb.asia-southeast1.firebasedatabase.app";
+        'https://attendance-653e9-default-rtdb.asia-southeast1.firebasedatabase.app';
   } else {
     await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform);
@@ -50,7 +50,7 @@ class AttendanceApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
-      home: const HomePage(title: "Homerooms"),
+      home: const HomePage(title: 'Homerooms'),
     );
   }
 }

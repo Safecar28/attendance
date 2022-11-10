@@ -15,7 +15,7 @@ class HomeroomList extends StatelessWidget {
     if (homerooms.isEmpty) {
       return EmptyListMessage(
         name: 'homeroom',
-        message: 'School need homerooms to study',
+        message: 'School needs homerooms to study',
         onPressed: add,
       );
     }
@@ -37,14 +37,14 @@ class HomeroomList extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                       context,
-                      MaterialPageRoute(
+                      MaterialPageRoute<Widget>(
                           builder: (context) =>
                               StudentsPage(homeroomId: h.id)));
                 },
                 onLongPress: () {
                   Navigator.push(
                       context,
-                      MaterialPageRoute(
+                      MaterialPageRoute<Widget>(
                           fullscreenDialog: true,
                           builder: (context) => HomeroomForm(
                                 id: h.id,

@@ -9,8 +9,8 @@ class CurrentDate extends ConsumerWidget {
 
   void Function() _datePicker(BuildContext context, WidgetRef ref) {
     return () {
-      final DateTime dt = DateTime.now().subtract(const Duration(days: 3));
-      final DateTime lt = dt.add(const Duration(days: 9));
+      final DateTime dt = DateTime.now().subtract(const Duration(days: 30));
+      final DateTime lt = DateTime.now();
       showDatePicker(
               context: context,
               initialDate: ref.read(currentDate),
@@ -23,7 +23,7 @@ class CurrentDate extends ConsumerWidget {
     };
   }
 
-  String _displayDt(DateTime d) => DateFormat("dd MMM ’yy").format(d);
+  String _displayDt(DateTime d) => DateFormat('dd MMM ’yy').format(d);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

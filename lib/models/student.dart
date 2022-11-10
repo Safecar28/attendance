@@ -26,20 +26,20 @@ class Student {
   }
 
   static Future<void> upsertStudent(
-      String? id, firstName, lastName, Homeroom homeroom) {
+      String? id, String firstName, String lastName, Homeroom homeroom) {
     final creating = id == null;
     id = id ?? studentID();
 
     // if creating add student to homeroom
     if (creating) {
       FirebaseDatabase.instance
-          .ref("homerooms/${homeroom.id}/students")
+          .ref('homerooms/${homeroom.id}/students')
           .push()
           .set(id);
     }
 
     return FirebaseDatabase.instance
-        .ref("students/$id")
+        .ref('students/$id')
         .set({'id': id, 'name': firstName, 'lastName': lastName});
   }
 
@@ -51,9 +51,9 @@ class Student {
         .remove();
   }
 
-  String name() => "$firstName  $lastName";
+  String name() => '$firstName  $lastName';
 }
 
 String studentID() {
-  return "st-${customAlphabet(nanoIdChars, 7)}";
+  return 'st-${customAlphabet(nanoIdChars, 7)}';
 }

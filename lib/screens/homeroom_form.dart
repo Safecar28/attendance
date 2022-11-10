@@ -31,7 +31,7 @@ class _HomeroomFormState extends ConsumerState<HomeroomForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.id != null ? widget.name : "Add Homeroom"),
+        title: Text(widget.id != null ? widget.name : 'Add Homeroom'),
         actions: [
           IconButton(
               onPressed: () {

@@ -12,7 +12,7 @@ class StudentsPage extends ConsumerWidget {
     return () {
       Navigator.push(
           context,
-          MaterialPageRoute(
+          MaterialPageRoute<Widget>(
               fullscreenDialog: true,
               builder: (context) => StudentForm(
                     homeroom: homeroom,
@@ -31,7 +31,7 @@ class StudentsPage extends ConsumerWidget {
           return Scaffold(
               backgroundColor: Theme.of(context).backgroundColor,
               appBar: AppBar(
-                title: Text("${homeroom.name} Students"),
+                title: Text('${homeroom.name} Students'),
                 actions: [
                   IconButton(
                     icon: const Icon(Icons.person_add),
@@ -40,12 +40,15 @@ class StudentsPage extends ConsumerWidget {
                 ],
               ),
               body: Column(children: [
-                const Align(
-                    alignment: Alignment.centerRight,
-                    child: Padding(
-                      padding: EdgeInsets.only(right: 5),
-                      child: CurrentDate(),
-                    )),
+                if (homeroom.studentIds.isEmpty)
+                  const SizedBox()
+                else
+                  const Align(
+                      alignment: Alignment.centerRight,
+                      child: Padding(
+                        padding: EdgeInsets.only(right: 5),
+                        child: CurrentDate(),
+                      )),
                 FutureBuilder<Iterable<Student>>(
                     future: homeroom.students(),
                     builder: (context, snapshot) {
