@@ -15,9 +15,7 @@ class HomeroomList extends StatelessWidget {
         itemBuilder: (context, index) {
           final h = homerooms.elementAt(index);
           final num = h.studentIds.length;
-          final page = StudentsPage(homeroomId: h.id);
 
-          // return list
           return StyledCard(
               key: Key(h.id),
               child: ListTile(
@@ -25,7 +23,10 @@ class HomeroomList extends StatelessWidget {
                 subtitle: Text("$num students"),
                 onTap: () {
                   Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => page));
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              StudentsPage(homeroomId: h.id)));
                 },
               ));
         });
