@@ -34,12 +34,18 @@ class Student {
     if (creating) {
       FirebaseDatabase.instance
           .ref("homerooms/${homeroom.id}/students")
-          .set([...homeroom.studentIds, id]);
+          .update({id: true});
     }
 
     return FirebaseDatabase.instance
         .ref("students/$id")
         .set({'id': id, 'name': firstName, 'lastName': lastName});
+  }
+
+  Future<void> removeFrom(Homeroom h) {
+    return FirebaseDatabase.instance
+        .ref("homerooms/${h.id}/students/$id")
+        .remove();
   }
 
   String name() => "$firstName  $lastName";

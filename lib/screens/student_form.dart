@@ -1,17 +1,10 @@
 part of '../main.dart';
 
 class StudentForm extends ConsumerStatefulWidget {
-  const StudentForm(
-      {Key? key,
-      this.id,
-      this.firstName = '',
-      this.lastName = '',
-      required this.homeroom})
+  const StudentForm({Key? key, required this.homeroom, this.student})
       : super(key: key);
 
-  final String? id;
-  final String firstName;
-  final String lastName;
+  final Student? student;
   final Homeroom homeroom;
 
   @override
@@ -28,9 +21,11 @@ class _StudentFormState extends ConsumerState<StudentForm> {
   @override
   void initState() {
     super.initState();
-    _firstName = widget.firstName;
-    _lastName = widget.lastName;
-    editing = widget.id != null;
+    if (widget.student != null) {
+      _firstName = widget.student!.firstName;
+      _lastName = widget.student!.lastName;
+      editing = widget.student!.id != '';
+    }
   }
 
   void setFirstName(String val) {
@@ -45,17 +40,25 @@ class _StudentFormState extends ConsumerState<StudentForm> {
     });
   }
 
+  void Function() _removeStudent(context) {
+    return () {
+      widget.student!
+          .removeFrom(widget.homeroom)
+          .then((value) => Navigator.pop(context))
+          .onError((error, stackTrace) => print(error));
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-            editing ? "${widget.firstName} ${widget.lastName}" : "Add Student"),
+        title: Text(editing ? "Edit $_firstName $_lastName" : "Add Student"),
         actions: [
           IconButton(
               onPressed: () {
-                Student.upsertStudent(
-                        widget.id, _firstName, _lastName, widget.homeroom)
+                Student.upsertStudent(widget.student?.id, _firstName, _lastName,
+                        widget.homeroom)
                     .then((value) => Navigator.pop(context))
                     .onError((error, stackTrace) => print(error));
               },
@@ -76,9 +79,22 @@ class _StudentFormState extends ConsumerState<StudentForm> {
               value: _lastName,
               setState: setLastName,
             ),
+            const SizedBox(height: 45),
+            editing
+                ? ElevatedButton(
+                    onPressed: _removeStudent(context),
+                    style: deleteButtonStyle,
+                    child:
+                        Text("Remove $_firstName from ${widget.homeroom.name}"),
+                  )
+                : const SizedBox(),
           ],
         ),
       ),
     );
   }
 }
+
+final deleteButtonStyle = TextButton.styleFrom(
+    backgroundColor: Colors.redAccent,
+    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30));

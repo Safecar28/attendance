@@ -50,10 +50,8 @@ class StudentList extends StatelessWidget {
                       MaterialPageRoute(
                           fullscreenDialog: true,
                           builder: (context) => StudentForm(
-                                id: student.id,
-                                firstName: student.firstName,
-                                lastName: student.lastName,
                                 homeroom: homeroom,
+                                student: student,
                               )));
                 },
               ));

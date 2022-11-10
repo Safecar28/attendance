@@ -9,11 +9,13 @@ class Homeroom {
   Homeroom({this.id = '', this.name = '', this.studentIds = const []});
 
   factory Homeroom.fromDS(DataSnapshot data) {
-    final list = ((data.child('students').value ?? []) as List<Object?>);
+    final ids = ((data.child('students').value ?? {}) as Map)
+        .keys
+        .map((e) => e as String);
     return Homeroom(
         id: (data.key as String),
         name: (data.child('name').value as String),
-        studentIds: (list.map((e) => e as String)));
+        studentIds: ids);
   }
 
   factory Homeroom.fromDSRead(DataSnapshot data, Reader read) {
