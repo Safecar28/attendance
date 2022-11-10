@@ -71,16 +71,20 @@ class AttendanceRadio extends ConsumerWidget {
   @override
   Widget build(context, ref) {
     var s = ref.watch(currentStudent);
-    var att = ref.watch(currentAttendance);
+    var current = ref.watch(currentAttendance);
+    var att = Attendance(
+        date: current.date,
+        status: kind,
+        reason: current.reason,
+        studentId: s.id);
     final notify = ref.read(currentAttendance.notifier);
     return ListTile(
       title: Text(kind.title),
-      onTap: () => notify.update((_) => Attendance(
-          date: att.date, status: kind, reason: att.reason, studentId: s.id)),
+      onTap: () => notify.update((_) => att),
       leading: Radio<AttendanceType>(
         value: kind,
-        groupValue: att.status,
-        onChanged: (_) => {},
+        groupValue: current.status,
+        onChanged: (_) => notify.update((_) => att),
       ),
     );
   }
