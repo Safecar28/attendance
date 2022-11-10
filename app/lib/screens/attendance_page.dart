@@ -1,7 +1,7 @@
 part of '../main.dart';
 
 final currentAttendance = StateProvider.autoDispose<AttendanceType>((ref) {
-  return AttendanceType.absent;
+  return AttendanceType.none;
 });
 
 class AttendancePage extends ConsumerWidget {
@@ -11,25 +11,20 @@ class AttendancePage extends ConsumerWidget {
 
   @override
   Widget build(context, ref) {
-    final s = student;
-    var att = ref.watch(currentAttendance);
-    final ratt = ref.read(currentAttendance.notifier);
-    final date = ref.watch(currentDate);
-    final attRadios = AttendanceType.values.map((e) => ListTile(
-          title: Text(e.name),
-          onTap: () {
-            ratt.state = e;
-          },
+    var state = ref.watch(currentAttendance);
+    final notify = ref.read(currentAttendance.notifier);
+    final date = DateFormat.Md().format(ref.watch(currentDate));
+    final choices = AttendanceType.values.map((e) => ListTile(
+          title: Text(e.title),
+          onTap: () => notify.state = e,
           leading: Radio<AttendanceType>(
             value: e,
-            groupValue: att,
-            onChanged: (v) {
-              ratt.state = v!;
-            },
+            groupValue: state,
+            onChanged: (_) => notify.state = e,
           ),
         ));
     return Scaffold(
-      appBar: AppBar(title: Text(s.name())),
+      appBar: AppBar(title: Text(student.name())),
       body: Column(
         children: [
           const Center(
@@ -38,9 +33,11 @@ class AttendancePage extends ConsumerWidget {
           Padding(
             padding: const EdgeInsets.all(20),
             child: Text(
-                '${student.name()} is ${att.name} on ${date.month}/${date.day}'),
+              '${student.firstName} ${state.titleVerb} on $date',
+              style: const TextStyle(color: Colors.blueGrey),
+            ),
           ),
-          ...attRadios,
+          ...choices,
         ],
       ),
     );

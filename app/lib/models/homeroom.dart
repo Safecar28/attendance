@@ -27,14 +27,15 @@ class Homeroom {
   }
 
   factory Homeroom.fromDSRead(DataSnapshot data, Reader read) {
-    final h = Homeroom.fromDS(data);
-    h.read = read;
-    return h;
+    return Homeroom.fromDS(data)..read = read;
   }
 
   static Stream<Iterable<Homeroom>> all() {
-    return FirebaseDatabase.instance.ref('homerooms').orderByKey().onValue.map(
-        (event) => event.snapshot.children.map((ds) => Homeroom.fromDS(ds)));
+    return FirebaseDatabase.instance
+        .ref('homerooms')
+        .orderByKey()
+        .onValue
+        .map((e) => e.snapshot.children.map((ds) => Homeroom.fromDS(ds)));
   }
 
   Future<Iterable<Student>> students() async {
