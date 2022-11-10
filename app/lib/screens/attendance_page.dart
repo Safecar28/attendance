@@ -28,14 +28,36 @@ class AttendancePage extends ConsumerWidget {
         ));
     return Scaffold(
       appBar: AppBar(title: Text(student.name())),
-      body: Column(
-        children: [
-          const Center(child: CurrentDate()),
-          AttendanceDisplay(student: student, state: state),
-          ...choices,
-          const Divider(),
-          if (state == AttendanceType.excused) const ExcusedReason()
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const Center(child: CurrentDate()),
+            ...choices,
+            if (state == AttendanceType.excused) ...[
+              const Divider(),
+              const ExcusedReason()
+            ],
+            const Divider(),
+            AttendanceDisplay(student: student, state: state),
+            ButtonBar(
+              layoutBehavior: ButtonBarLayoutBehavior.padded,
+              alignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.red, minimumSize: const Size(100, 40)),
+                    onPressed: () {},
+                    child: const Text('Previous')),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.green,
+                        minimumSize: const Size(100, 40)),
+                    onPressed: () {},
+                    child: const Text('Next'))
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
