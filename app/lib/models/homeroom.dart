@@ -31,6 +31,7 @@ class Homeroom {
   }
 
   static Stream<Iterable<Homeroom>> all() {
+    // using timestamp as key keep them sorted
     return FirebaseDatabase.instance
         .ref('homerooms')
         .orderByKey()
@@ -62,6 +63,7 @@ final homeroomProvider = StreamProvider.family<Homeroom, String>((ref, id) {
 final homeroomsProvider =
     StreamProvider<Iterable<Homeroom>>((ref) => Homeroom.all());
 
+// using timestamp to keep them sorted
 String homeroomID() {
-  return 'hr-${DateTime.now().millisecondsSinceEpoch}';
+  return 'hr-${(DateTime.now().millisecondsSinceEpoch / 100).floor()}';
 }

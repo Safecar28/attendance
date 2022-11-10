@@ -29,9 +29,6 @@ class CurrentDate extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final DateTime dt = ref.watch(currentDate);
     return ElevatedButton(
-        style: TextButton.styleFrom(
-            primary: Colors.indigo, backgroundColor: Colors.white70),
-        onPressed: _datePicker(context, ref),
-        child: Text(_displayDt(dt)));
+        onPressed: _datePicker(context, ref), child: Text(_displayDt(dt)));
   }
 }

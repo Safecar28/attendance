@@ -34,7 +34,7 @@ class AttendancePage extends ConsumerWidget {
             padding: const EdgeInsets.all(20),
             child: Text(
               '${student.firstName} ${state.titleVerb} on $date',
-              style: const TextStyle(color: Colors.blueGrey),
+              style: TextStyle(color: Theme.of(context).primaryColorDark),
             ),
           ),
           ...choices,
