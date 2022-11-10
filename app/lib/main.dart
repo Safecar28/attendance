@@ -15,6 +15,7 @@ part 'screens/students_page.dart';
 part 'screens/attendance_page.dart';
 part 'screens/student_form.dart';
 part 'screens/homeroom_form.dart';
+part 'screens/reports_page.dart';
 
 part 'widgets/homeroom_list.dart';
 part 'widgets/student_list.dart';
@@ -48,7 +49,7 @@ class AttendanceApp extends StatelessWidget {
     return MaterialApp(
       title: 'Attendance App',
       theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
+        primarySwatch: Colors.indigo,
       ),
       home: const HomePage(title: 'Homerooms'),
     );

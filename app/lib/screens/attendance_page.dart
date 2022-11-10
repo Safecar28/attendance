@@ -1,7 +1,8 @@
 part of '../main.dart';
 
-final currentAttendance = StateProvider<Attendance>((ref) {
-  return Attendance(date: ref.watch(currentDate), status: AttendanceType.none);
+final currentAttendance =
+    StateNotifierProvider<AttendanceNotifier, Attendance>((ref) {
+  return AttendanceNotifier(Attendance.empty());
 });
 
 final currentStudent = StateProvider<Student>((ref) {
@@ -34,8 +35,8 @@ class AttendancePage extends ConsumerWidget {
             ButtonBar(
               alignment: MainAxisAlignment.center,
               children: [
-                navButton('Previous', student, ref),
-                navButton('Next', student, ref),
+                navButton('Previous', context, ref),
+                navButton('Save & Next', context, ref),
               ],
             )
           ],
@@ -44,17 +45,26 @@ class AttendancePage extends ConsumerWidget {
     );
   }
 
-  ElevatedButton navButton(String text, Student s, WidgetRef ref) {
-    final move = text == 'Next' ? 1 : -1;
-    final color = text == 'Next' ? Colors.green : Colors.red;
+  ElevatedButton navButton(String text, BuildContext context, WidgetRef ref) {
+    final s = ref.watch(currentStudent);
+    final att = ref.watch(currentAttendance);
+    final date = ref.watch(currentDate);
+    final move = text == 'Previous' ? -1 : 1;
+    final color = text == 'Previous' ? Colors.red : Colors.green;
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-            primary: color, minimumSize: const Size(100, 40)),
+            primary: color, minimumSize: const Size(120, 40), elevation: 0.9),
         onPressed: () {
-          final idx = students.indexOf(s) + move;
-          if (idx >= 0 && idx < students.length) {
-            ref.read(currentStudent.notifier).update((state) => students[idx]);
-          }
+          att.upsert(s, date).then((_) {
+            final idx = students.indexOf(s) + move;
+            if (idx >= 0 && idx < students.length) {
+              ref
+                  .read(currentStudent.notifier)
+                  .update((state) => students[idx]);
+            } else if (idx == students.length) {
+              Navigator.pop(context);
+            }
+          });
         },
         child: Text(text));
   }
@@ -70,21 +80,15 @@ class AttendanceRadio extends ConsumerWidget {
 
   @override
   Widget build(context, ref) {
-    var s = ref.watch(currentStudent);
     var current = ref.watch(currentAttendance);
-    var att = Attendance(
-        date: current.date,
-        status: kind,
-        reason: current.reason,
-        studentId: s.id);
     final notify = ref.read(currentAttendance.notifier);
     return ListTile(
       title: Text(kind.title),
-      onTap: () => notify.update((_) => att),
+      onTap: () => notify.update(status: kind),
       leading: Radio<AttendanceType>(
         value: kind,
         groupValue: current.status,
-        onChanged: (_) => notify.update((_) => att),
+        onChanged: (_) => notify.update(status: kind),
       ),
     );
   }
@@ -107,10 +111,9 @@ class ExcusedReason extends ConsumerWidget {
           child: TextFormField(
             maxLength: 100,
             initialValue: state.reason,
-            onChanged: (value) =>
-                notify.update((state) => state..reason = value),
-            decoration:
-                const InputDecoration.collapsed(hintText: 'Excused for?'),
+            onChanged: (value) => notify.update(reason: value),
+            decoration: const InputDecoration.collapsed(
+                hintText: 'Please provide a reason'),
           ),
         )
       ],
