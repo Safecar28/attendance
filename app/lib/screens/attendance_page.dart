@@ -1,5 +1,9 @@
 part of '../main.dart';
 
+final currentAttendance = StateProvider.autoDispose<AttendanceType>((ref) {
+  return AttendanceType.absent;
+});
+
 class AttendancePage extends ConsumerWidget {
   const AttendancePage({Key? key, required this.student}) : super(key: key);
 
@@ -8,6 +12,20 @@ class AttendancePage extends ConsumerWidget {
   @override
   Widget build(context, ref) {
     final s = student;
+    final att = ref.watch(currentAttendance);
+    final date = ref.watch(currentDate);
+    final attRadios = AttendanceType.values.map((e) => ListTile(
+          title: Text(e.name),
+          leading: Radio<AttendanceType>(
+            value: e,
+            groupValue: att,
+            onChanged: (AttendanceType? value) {
+              ref
+                  .read(currentAttendance.notifier)
+                  .update((state) => value ?? att);
+            },
+          ),
+        ));
     return Scaffold(
       appBar: AppBar(title: Text(s.name())),
       body: Column(
@@ -15,17 +33,12 @@ class AttendancePage extends ConsumerWidget {
           const Center(
             child: CurrentDate(),
           ),
-          Column(
-            children: List<Widget>.generate(
-              3,
-              (int index) {
-                return ChoiceChip(
-                  label: Text('Item $index'),
-                  selected: 1 == index,
-                );
-              },
-            ).toList(),
-          )
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Text(
+                '${student.name()} is ${att.name} on ${date.month}/${date.day}'),
+          ),
+          ...attRadios,
         ],
       ),
     );

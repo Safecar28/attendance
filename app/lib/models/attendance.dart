@@ -1,8 +1,10 @@
 part of models;
 
 enum AttendanceType {
+  // holiday,
   absent,
-  holiday,
+  excused,
+  present,
 }
 
 class Attendance {}
