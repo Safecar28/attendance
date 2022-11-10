@@ -10,21 +10,14 @@ class AttendancePage extends StatefulWidget {
 }
 
 class _AttendancePageState extends State<AttendancePage> {
-  DateTime _selectedDate = DateTime.now();
+  DateTime _dt = DateTime.now();
+  final DateTime _lt = DateTime.now().add(const Duration(days: 7));
 
-  void _presentDatePicker() {
+  void _datePicker() {
     showDatePicker(
-            context: context,
-            initialDate: DateTime.now(),
-            firstDate: DateTime.now(),
-            lastDate: DateTime.now().add(const Duration(days: 7)))
-        .then((pickedDate) {
-      // Check if no date is selected
-      if (pickedDate == null) return;
-
-      setState(() {
-        _selectedDate = pickedDate;
-      });
+            context: context, initialDate: _dt, firstDate: _dt, lastDate: _lt)
+        .then((val) {
+      setState(() => _dt = val ?? _dt);
     });
   }
 
@@ -33,18 +26,30 @@ class _AttendancePageState extends State<AttendancePage> {
     final s = widget.student;
     return Scaffold(
       appBar: AppBar(title: Text(s.name())),
-      body: Center(
-          child: Column(
+      body: Column(
         children: [
-          ElevatedButton(
-              onPressed: () {
-                _presentDatePicker();
+          Center(
+            child: ElevatedButton(
+                style: TextButton.styleFrom(
+                    primary: Colors.indigo, backgroundColor: Colors.white70),
+                onPressed: _datePicker,
+                child: Text(_displayDt())),
+          ),
+          Column(
+            children: List<Widget>.generate(
+              3,
+              (int index) {
+                return ChoiceChip(
+                  label: Text('Item $index'),
+                  selected: 1 == index,
+                );
               },
-              child: Text(_displayDate()))
+            ).toList(),
+          )
         ],
-      )),
+      ),
     );
   }
 
-  String _displayDate() => DateFormat("dd MMM ’yy").format(_selectedDate);
+  String _displayDt() => DateFormat("dd MMM ’yy").format(_dt);
 }
