@@ -1,6 +1,6 @@
 part of '../main.dart';
 
-class StudentList extends StatelessWidget {
+class StudentList extends ConsumerWidget {
   const StudentList({
     Key? key,
     required this.students,
@@ -21,7 +21,7 @@ class StudentList extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context, ref) {
     if (students.isEmpty) {
       return EmptyListMessage(
         name: 'student',
@@ -40,13 +40,12 @@ class StudentList extends StatelessWidget {
                 title: Text(student.name()),
                 subtitle: Text('# ${index + 1}'),
                 onTap: () {
+                  ref.read(currentStudent.notifier).update((_) => student);
                   Navigator.push(
                       context,
                       MaterialPageRoute<Widget>(
                           fullscreenDialog: true,
-                          builder: (context) => AttendancePage(
-                                student: student,
-                              )));
+                          builder: (context) => const AttendancePage()));
                 },
                 onLongPress: () {
                   Navigator.push(

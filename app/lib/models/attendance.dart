@@ -30,4 +30,11 @@ extension AttendanceTypeExt on AttendanceType {
   }
 }
 
-class Attendance {}
+class Attendance {
+  Attendance({required this.date, this.studentId, this.status, this.reason});
+
+  DateTime date;
+  String? studentId;
+  AttendanceType? status;
+  String? reason;
+}

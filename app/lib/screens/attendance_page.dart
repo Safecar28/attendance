@@ -1,29 +1,36 @@
 part of '../main.dart';
 
-final currentAttendance = StateProvider.autoDispose<AttendanceType>((ref) {
-  return AttendanceType.none;
+final currentAttendance = StateProvider<Attendance>((ref) {
+  return Attendance(date: ref.watch(currentDate), status: AttendanceType.none);
 });
 
-final currentReason = StateProvider<String>((ref) {
-  return '';
+final currentStudent = StateProvider<Student>((ref) {
+  return Student();
 });
 
 class AttendancePage extends ConsumerWidget {
-  const AttendancePage({Key? key, required this.student}) : super(key: key);
-
-  final Student student;
+  const AttendancePage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(context, ref) {
+    var student = ref.watch(currentStudent);
     var state = ref.watch(currentAttendance);
     final notify = ref.read(currentAttendance.notifier);
     final choices = AttendanceType.values.map((e) => ListTile(
           title: Text(e.title),
-          onTap: () => notify.state = e,
+          onTap: () => notify.update((state) {
+            return Attendance(
+                date: state.date,
+                status: e,
+                reason: state.reason,
+                studentId: student.id);
+          }),
           leading: Radio<AttendanceType>(
             value: e,
-            groupValue: state,
-            onChanged: (_) => notify.state = e,
+            groupValue: state.status,
+            onChanged: (_) => {},
           ),
         ));
     return Scaffold(
@@ -33,12 +40,12 @@ class AttendancePage extends ConsumerWidget {
           children: [
             const Center(child: CurrentDate()),
             ...choices,
-            if (state == AttendanceType.excused) ...[
+            if (state.status == AttendanceType.excused) ...[
               const Divider(),
               const ExcusedReason()
             ],
             const Divider(),
-            AttendanceDisplay(student: student, state: state),
+            AttendanceDisplay(student: student, att: state),
             ButtonBar(
               layoutBehavior: ButtonBarLayoutBehavior.padded,
               alignment: MainAxisAlignment.center,
@@ -70,14 +77,14 @@ class ExcusedReason extends ConsumerWidget {
 
   @override
   Widget build(context, ref) {
-    var state = ref.watch(currentReason);
-    final notify = ref.read(currentReason.notifier);
+    var state = ref.watch(currentAttendance);
+    final notify = ref.read(currentAttendance.notifier);
     return Padding(
       padding: const EdgeInsets.all(7),
       child: TextFormField(
         maxLength: 100,
-        initialValue: state,
-        onChanged: (value) => notify.state = value,
+        initialValue: state.reason,
+        onChanged: (value) => notify.update((state) => state..reason = value),
         decoration: const InputDecoration.collapsed(hintText: 'Excused for?'),
       ),
     );
@@ -88,11 +95,11 @@ class AttendanceDisplay extends ConsumerWidget {
   const AttendanceDisplay({
     Key? key,
     required this.student,
-    required this.state,
+    required this.att,
   }) : super(key: key);
 
   final Student student;
-  final AttendanceType state;
+  final Attendance att;
 
   @override
   Widget build(context, ref) {
@@ -100,7 +107,7 @@ class AttendanceDisplay extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Text(
-        '${student.firstName} ${state.display} on $date',
+        '${student.firstName} ${att.status?.display} on $date',
         style: TextStyle(color: Theme.of(context).primaryColorDark),
       ),
     );
