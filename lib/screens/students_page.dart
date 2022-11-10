@@ -14,7 +14,7 @@ class StudentsPage extends ConsumerWidget {
 
     return homeroom.when(
         loading: () => const Wait(),
-        error: (err, stack) => Text('Error: $err'),
+        error: (err, stack) => Err(err: err),
         data: (homeroom) {
           return Scaffold(
               appBar: AppBar(

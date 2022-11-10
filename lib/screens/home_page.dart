@@ -8,7 +8,7 @@ class HomePage extends ConsumerWidget {
   @override
   build(context, ref) => ref.watch(homeroomsProvider).when(
       loading: () => const Wait(),
-      error: (err, stack) => const Wait(),
+      error: (err, stack) => Err(err: err),
       data: (homerooms) {
         return Scaffold(
             appBar: AppBar(
