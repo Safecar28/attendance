@@ -24,7 +24,7 @@ class HomeroomList extends StatelessWidget {
               final page = StudentPage(homeroomId: h.id, data: snapshot.data!);
 
               // return list
-              return HomeroomCard(
+              return StyledCard(
                   key: Key(h.id),
                   child: ListTile(
                     title: Text(h.name),
@@ -38,8 +38,8 @@ class HomeroomList extends StatelessWidget {
       }));
 }
 
-class HomeroomCard extends StatelessWidget {
-  const HomeroomCard({
+class StyledCard extends StatelessWidget {
+  const StyledCard({
     Key? key,
     required this.child,
   }) : super(key: key);
@@ -48,7 +48,6 @@ class HomeroomCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Card(
-      key: key,
       shadowColor: Theme.of(context).primaryColor,
       clipBehavior: Clip.antiAlias,
       surfaceTintColor: Theme.of(context).colorScheme.background,

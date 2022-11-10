@@ -14,10 +14,13 @@ class StudentList extends StatelessWidget {
         itemCount: students.length,
         itemBuilder: (context, index) {
           final student = students.elementAt(index);
-          return ListTile(
-            key: Key(student.id),
-            title: Text(student.name()),
-          );
+          return StyledCard(
+              key: Key(student.id),
+              child: ListTile(
+                title: Text(student.name()),
+                subtitle: Text("# ${index + 1}"),
+                onTap: () {},
+              ));
         });
   }
 }

@@ -4,11 +4,14 @@ import 'package:attendance/firebase_options.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'models/models.dart';
 
 part 'screens/home_page.dart';
 part 'screens/student_page.dart';
+part 'screens/attendance_page.dart';
+
 part 'widgets/homeroom_list.dart';
 part 'widgets/student_list.dart';
 part 'widgets/wait.dart';
@@ -27,11 +30,11 @@ class AttendanceApp extends StatelessWidget {
   @override
   build(BuildContext context) {
     return MaterialApp(
-      title: 'COIS Attendance',
+      title: 'Attendance App',
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
-      home: const HomePage(title: 'COIS'),
+      home: const HomePage(title: 'Homerooms'),
     );
   }
 }

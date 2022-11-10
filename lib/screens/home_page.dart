@@ -18,6 +18,12 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.person_add),
+              onPressed: () {},
+            ),
+          ],
         ),
         body: StreamBuilder<Iterable<Homeroom>>(
             stream: _homerooms,

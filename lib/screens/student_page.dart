@@ -35,6 +35,18 @@ class _StudentPageState extends State<StudentPage> {
           return Scaffold(
               appBar: AppBar(
                 title: Text("${h.name} Students"),
+                actions: [
+                  IconButton(
+                    icon: const Icon(Icons.text_increase_outlined),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              fullscreenDialog: true,
+                              builder: (context) => const AttendancePage()));
+                    },
+                  )
+                ],
               ),
               body: StudentList(students: students)
               // This trailing comma makes auto-formatting nicer for build methods.
