@@ -9,17 +9,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const AttendanceApp());
-
-  final dp1 = Homeroom.fromDSS(
-      await FirebaseDatabase.instance.ref('homerooms/dp1').get());
-
-  print("${dp1.name} has ${dp1.studentIds.length} students!");
-
-  final studentsRef = FirebaseDatabase.instance.ref('students');
-  final student =
-      Student.fromDSS(await studentsRef.child(dp1.studentIds.first).get());
-
-  print("${student.name()}!");
+  // await debugDB();
 }
 
 class AttendanceApp extends StatelessWidget {
@@ -79,4 +69,17 @@ class _HomePageState extends State<HomePage> {
         // This trailing comma makes auto-formatting nicer for build methods.
         );
   }
+}
+
+Future<void> debugDB() async {
+  final dp1 = Homeroom.fromDSS(
+      await FirebaseDatabase.instance.ref('homerooms/dp1').get());
+
+  print("${dp1.name} has ${dp1.studentIds.length} students!");
+
+  final studentsRef = FirebaseDatabase.instance.ref('students');
+  final student =
+      Student.fromDSS(await studentsRef.child(dp1.studentIds.first).get());
+
+  print("${student.name()}!");
 }
