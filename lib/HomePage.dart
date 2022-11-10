@@ -57,9 +57,7 @@ class _HomePageState extends State<HomePage> {
                 subtitle: Text("${homeroom.studentIds.length} students"),
                 onTap: () => _handleTap(homeroom.id),
               );
-            })
-        // This trailing comma makes auto-formatting nicer for build methods.
-        );
+            }));
   }
 
   @override
