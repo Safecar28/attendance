@@ -9,8 +9,10 @@ import 'package:flutter/material.dart';
 
 import 'models/models.dart';
 
-part 'HomePage.dart';
-part 'StudentPage.dart';
+part 'screens/HomePage.dart';
+part 'screens/StudentPage.dart';
+part 'widgets/HomeroomList.dart';
+part 'widgets/StudentList.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,14 +38,14 @@ class AttendanceApp extends StatelessWidget {
 }
 
 Future<void> debugDB() async {
-  final dp1 = Homeroom.fromDSS(
+  final dp1 = Homeroom.fromDS(
       await FirebaseDatabase.instance.ref('homerooms/dp1').get());
 
   print("${dp1.name} has ${dp1.studentIds.length} students!");
 
   final studentsRef = FirebaseDatabase.instance.ref('students');
   final student =
-      Student.fromDSS(await studentsRef.child(dp1.studentIds.first).get());
+      Student.fromDS(await studentsRef.child(dp1.studentIds.first).get());
 
   print("${student.name()}!");
 }
