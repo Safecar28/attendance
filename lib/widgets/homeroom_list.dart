@@ -21,17 +21,40 @@ class HomeroomList extends StatelessWidget {
               itemCount: homerooms.length,
               itemBuilder: (context, index) {
                 final h = homerooms.elementAt(index);
-                final sp = StudentPage(homeroomId: h.id, data: snapshot.data!);
+                final num = h.studentIds.length;
+                final page =
+                    StudentPage(homeroomId: h.id, data: snapshot.data!);
+
                 // return list
-                return ListTile(
+                return StudentCard(
+                    child: ListTile(
                   title: Text(h.name),
-                  subtitle: Text("${h.studentIds.length} students"),
+                  subtitle: Text("$num students"),
                   onTap: () {
                     Navigator.push(
-                        context, MaterialPageRoute(builder: (context) => sp));
+                        context, MaterialPageRoute(builder: (context) => page));
                   },
-                );
+                ));
               });
         }));
+  }
+}
+
+class StudentCard extends StatelessWidget {
+  const StudentCard({
+    Key? key,
+    required this.child,
+  }) : super(key: key);
+
+  final ListTile child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+        shadowColor: Colors.lightGreenAccent,
+        clipBehavior: Clip.antiAlias,
+        surfaceTintColor: Colors.deepPurpleAccent,
+        elevation: 1,
+        child: child);
   }
 }
