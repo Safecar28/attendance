@@ -9,9 +9,17 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const AttendanceApp());
-  final database = FirebaseDatabase.instance.ref('homerooms/dp1');
-  final dp1 = Homeroom.fromDSS(await database.get());
+
+  final dp1 = Homeroom.fromDSS(
+      await FirebaseDatabase.instance.ref('homerooms/dp1').get());
+
   print("${dp1.name} has ${dp1.studentIds.length} students!");
+
+  final studentsRef = FirebaseDatabase.instance.ref('students');
+  final student =
+      Student.fromDSS(await studentsRef.child(dp1.studentIds.first).get());
+
+  print("${student.name()}!");
 }
 
 class AttendanceApp extends StatelessWidget {
