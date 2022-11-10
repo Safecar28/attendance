@@ -2,12 +2,17 @@ part of '../main.dart';
 
 class StudentForm extends ConsumerStatefulWidget {
   const StudentForm(
-      {Key? key, this.id, this.firstName = '', this.lastName = ''})
+      {Key? key,
+      this.id,
+      this.firstName = '',
+      this.lastName = '',
+      required this.homeroom})
       : super(key: key);
 
   final String? id;
   final String firstName;
   final String lastName;
+  final Homeroom homeroom;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _StudentFormState();
@@ -16,6 +21,7 @@ class StudentForm extends ConsumerStatefulWidget {
 class _StudentFormState extends ConsumerState<StudentForm> {
   var _firstName = '';
   var _lastName = '';
+  var editing = false;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -24,6 +30,7 @@ class _StudentFormState extends ConsumerState<StudentForm> {
     super.initState();
     _firstName = widget.firstName;
     _lastName = widget.lastName;
+    editing = widget.id != null;
   }
 
   void setFirstName(String val) {
@@ -42,13 +49,20 @@ class _StudentFormState extends ConsumerState<StudentForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.id != null
-            ? "${widget.firstName} ${widget.lastName}"
-            : "Add Student"),
+        title: Text(
+            editing ? "${widget.firstName} ${widget.lastName}" : "Add Student"),
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.pop(context);
+                final id = widget.id ?? nanoid(7);
+                FirebaseDatabase.instance
+                    .ref("students/$id")
+                    .set({'id': id, 'name': _firstName, 'lastName': _lastName})
+                    .then((value) => Navigator.pop(context))
+                    .onError((error, stackTrace) => print(error));
+                FirebaseDatabase.instance
+                    .ref("homerooms/${widget.homeroom.id}/students")
+                    .set([...widget.homeroom.studentIds, id]);
               },
               icon: const Icon(Icons.save_rounded))
         ],
@@ -69,32 +83,6 @@ class _StudentFormState extends ConsumerState<StudentForm> {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class TextInput extends StatelessWidget {
-  const TextInput({
-    Key? key,
-    required this.label,
-    required this.value,
-    required this.setState,
-  }) : super(key: key);
-
-  final String label;
-  final String value;
-  final void Function(String) setState;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: TextFormField(
-        initialValue: value,
-        onChanged: setState,
-        decoration: InputDecoration(
-            border: const UnderlineInputBorder(), labelText: label),
       ),
     );
   }

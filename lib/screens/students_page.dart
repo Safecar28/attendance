@@ -27,7 +27,9 @@ class StudentsPage extends ConsumerWidget {
                           context,
                           MaterialPageRoute(
                               fullscreenDialog: true,
-                              builder: (context) => const StudentForm()));
+                              builder: (context) => StudentForm(
+                                    homeroom: homeroom,
+                                  )));
                     },
                   )
                 ],
@@ -36,7 +38,10 @@ class StudentsPage extends ConsumerWidget {
                   future: homeroom.students(),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) return const Wait();
-                    return StudentList(students: snapshot.data!);
+                    return StudentList(
+                      students: snapshot.data!,
+                      homeroom: homeroom,
+                    );
                   })
               // This trailing comma makes auto-formatting nicer for build methods.
               );

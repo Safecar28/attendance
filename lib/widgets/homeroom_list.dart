@@ -10,6 +10,29 @@ class HomeroomList extends StatelessWidget {
 
   @override
   Widget build(context) {
+    if (homerooms.isEmpty) {
+      return Column(
+        children: [
+          const Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 20),
+              child: Text("No Homerooms!"),
+            ),
+          ),
+          Center(
+            child: ElevatedButton(
+                child: const Text("Add your first homeroom"),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          fullscreenDialog: true,
+                          builder: (context) => const HomeroomForm()));
+                }),
+          )
+        ],
+      );
+    }
     return ListView.builder(
         itemCount: homerooms.length,
         itemBuilder: (context, index) {
@@ -27,6 +50,16 @@ class HomeroomList extends StatelessWidget {
                       MaterialPageRoute(
                           builder: (context) =>
                               StudentsPage(homeroomId: h.id)));
+                },
+                onLongPress: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          fullscreenDialog: true,
+                          builder: (context) => HomeroomForm(
+                                id: h.id,
+                                name: h.name,
+                              )));
                 },
               ));
         });

@@ -4,9 +4,11 @@ class StudentList extends StatelessWidget {
   const StudentList({
     Key? key,
     required this.students,
+    required this.homeroom,
   }) : super(key: key);
 
   final Iterable<Student> students;
+  final Homeroom homeroom;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +39,7 @@ class StudentList extends StatelessWidget {
                                 id: student.id,
                                 firstName: student.firstName,
                                 lastName: student.lastName,
+                                homeroom: homeroom,
                               )));
                 },
               ));

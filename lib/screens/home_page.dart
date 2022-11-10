@@ -16,7 +16,13 @@ class HomePage extends ConsumerWidget {
               actions: [
                 IconButton(
                   icon: const Icon(Icons.add_home),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            fullscreenDialog: true,
+                            builder: (context) => const HomeroomForm()));
+                  },
                 ),
               ],
             ),

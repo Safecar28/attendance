@@ -1,6 +1,6 @@
 part of models;
 
-final studentsProvider = FutureProvider<Iterable<Student>>((ref) async {
+final studentsProvider = StreamProvider<Iterable<Student>>((ref) {
   return Student.allOnce();
 });
 
@@ -18,9 +18,11 @@ class Student {
         lastName: (data.child('lastName').value as String));
   }
 
-  static Future<Iterable<Student>> allOnce() async {
-    final event = await FirebaseDatabase.instance.ref('students').once();
-    return event.snapshot.children.map((e) => Student.fromDS(e));
+  static Stream<Iterable<Student>> allOnce() {
+    return FirebaseDatabase.instance
+        .ref('students')
+        .onValue
+        .map((event) => event.snapshot.children.map((e) => Student.fromDS(e)));
   }
 
   String name() => "$firstName  $lastName";

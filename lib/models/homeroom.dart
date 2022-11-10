@@ -19,7 +19,7 @@ class Homeroom {
   Homeroom({this.id = '', this.name = '', this.studentIds = const []});
 
   factory Homeroom.fromDS(DataSnapshot data) {
-    final list = (data.child('students').value as List<Object?>);
+    final list = ((data.child('students').value ?? []) as List<Object?>);
     return Homeroom(
         id: (data.key as String),
         name: (data.child('name').value as String),
