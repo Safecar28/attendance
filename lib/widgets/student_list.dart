@@ -1,4 +1,4 @@
-part of mainui;
+part of '../main.dart';
 
 class StudentList extends StatelessWidget {
   const StudentList({

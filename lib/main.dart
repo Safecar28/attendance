@@ -1,5 +1,3 @@
-library mainui;
-
 import 'dart:async';
 
 import 'package:attendance/firebase_options.dart';
@@ -9,10 +7,10 @@ import 'package:flutter/material.dart';
 
 import 'models/models.dart';
 
-part 'screens/HomePage.dart';
-part 'screens/StudentPage.dart';
-part 'widgets/HomeroomList.dart';
-part 'widgets/StudentList.dart';
+part 'screens/home_page.dart';
+part 'screens/student_page.dart';
+part 'widgets/homeroom_list.dart';
+part 'widgets/student_list.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

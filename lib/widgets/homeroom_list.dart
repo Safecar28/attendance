@@ -1,4 +1,4 @@
-part of mainui;
+part of '../main.dart';
 
 class HomeroomList extends StatelessWidget {
   const HomeroomList({
