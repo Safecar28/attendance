@@ -13,7 +13,11 @@ class HomeroomList extends StatelessWidget {
   @override
   Widget build(context) {
     if (homerooms.isEmpty) {
-      return EmptyListMessage(name: 'homeroom', onPressed: add);
+      return EmptyListMessage(
+        name: 'homeroom',
+        message: 'School need homerooms to study',
+        onPressed: add,
+      );
     }
 
     return ListView.builder(

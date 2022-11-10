@@ -39,18 +39,25 @@ class StudentsPage extends ConsumerWidget {
                   )
                 ],
               ),
-              body: FutureBuilder<Iterable<Student>>(
-                  future: homeroom.students(),
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData) return const Wait();
-                    return StudentList(
-                      students: snapshot.data!,
-                      homeroom: homeroom,
-                      add: addStudent(context, homeroom),
-                    );
-                  })
-              // This trailing comma makes auto-formatting nicer for build methods.
-              );
+              body: Column(children: [
+                const Align(
+                    alignment: Alignment.centerRight,
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 5),
+                      child: CurrentDate(),
+                    )),
+                FutureBuilder<Iterable<Student>>(
+                    future: homeroom.students(),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) return const Wait();
+                      return Expanded(
+                          child: StudentList(
+                        students: snapshot.data!,
+                        homeroom: homeroom,
+                        add: addStudent(context, homeroom),
+                      ));
+                    })
+              ]));
         });
   }
 }

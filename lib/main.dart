@@ -19,6 +19,7 @@ part 'screens/homeroom_form.dart';
 part 'widgets/homeroom_list.dart';
 part 'widgets/student_list.dart';
 part 'widgets/text_input.dart';
+part 'widgets/current_date.dart';
 part 'widgets/wait_err.dart';
 
 void main() async {

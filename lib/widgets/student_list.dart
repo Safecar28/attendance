@@ -23,7 +23,11 @@ class StudentList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (students.isEmpty) {
-      return EmptyListMessage(name: 'student', onPressed: add);
+      return EmptyListMessage(
+        name: 'student',
+        message: 'Add students to Homeroom roster',
+        onPressed: add,
+      );
     }
 
     return ListView.builder(
@@ -62,11 +66,13 @@ class StudentList extends StatelessWidget {
 class EmptyListMessage extends StatelessWidget {
   const EmptyListMessage({
     Key? key,
+    this.message,
     required this.name,
     required this.onPressed,
   }) : super(key: key);
 
   final String name;
+  final String? message;
   final void Function() onPressed;
 
   @override
@@ -75,8 +81,13 @@ class EmptyListMessage extends StatelessWidget {
       children: [
         Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: Text("No ${name}s!"),
+            padding: const EdgeInsets.only(top: 20, bottom: 10),
+            child: Text("No ${name}s! \n${message ?? ''}",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                    color: Theme.of(context).disabledColor)),
           ),
         ),
         Center(
