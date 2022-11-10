@@ -11,27 +11,21 @@ enum AttendanceType {
 extension AttendanceTypeExt on AttendanceType {
   String get title {
     switch (this) {
-      case AttendanceType.holiday:
-        return 'Holiday';
-      case AttendanceType.absent:
-        return 'Absent';
       case AttendanceType.excused:
         return 'Absent Excused';
-      case AttendanceType.present:
-        return 'Present';
       default:
-        return 'None';
+        return toBeginningOfSentenceCase(name)!;
     }
   }
 
-  String get titleVerb {
+  String get display {
     switch (this) {
       case AttendanceType.none:
         return 'is not marked';
       case AttendanceType.holiday:
-        return 'on $title'.toLowerCase();
+        return 'is on $name';
       default:
-        return 'is $title'.toLowerCase();
+        return 'is $name';
     }
   }
 }
