@@ -14,7 +14,7 @@ class Student {
   factory Student.fromDS(DataSnapshot data) {
     return Student(
         id: (data.key as String),
-        firstName: (data.child('name').value as String),
+        firstName: (data.child('firstName').value as String),
         lastName: (data.child('lastName').value as String));
   }
 
@@ -40,7 +40,7 @@ class Student {
 
     return FirebaseDatabase.instance
         .ref('students/$id')
-        .set({'id': id, 'name': firstName, 'lastName': lastName});
+        .set({'id': id, 'firstName': firstName, 'lastName': lastName});
   }
 
   Future<void> removeFrom(Homeroom h) {
