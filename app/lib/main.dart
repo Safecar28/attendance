@@ -7,6 +7,10 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:fl_chart/fl_chart.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+import 'package:firebase_ui_auth/firebase_ui_auth.dart' as auth_ui;
 
 import 'package:attendance/models/models.dart';
 
@@ -16,6 +20,7 @@ part 'screens/attendance_page.dart';
 part 'screens/student_form.dart';
 part 'screens/homeroom_form.dart';
 part 'screens/reports_page.dart';
+part 'screens/login.dart';
 
 part 'widgets/homeroom_list.dart';
 part 'widgets/student_list.dart';
@@ -52,12 +57,12 @@ class AttendanceApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.indigo,
       ),
-      home: const HomePage(title: 'Homerooms'),
+      home: Login(),
     );
   }
 }
 
-Future<void> debugDB() async {
+// Future<void> debugDB() async {
   // final dp1 = Homeroom.fromDS(
   //     await FirebaseDatabase.instance.ref('homerooms/dp1').get());
 
@@ -68,4 +73,4 @@ Future<void> debugDB() async {
   //     Student.fromDS(await studentsRef.child(dp1.studentIds.first).get());
 
   // print("${student.name()}!");
-}
+// }

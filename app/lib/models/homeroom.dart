@@ -5,7 +5,7 @@ class Homeroom {
   String name;
   Map<String, String>? studentMap;
   List<String> studentIds;
-  Reader? read;
+  StreamProviderRef<Homeroom>? ref;
 
   Homeroom(
       {this.id = '',
@@ -26,8 +26,9 @@ class Homeroom {
         studentIds: orderKeys.map((e) => map[e] as String).toList());
   }
 
-  factory Homeroom.fromDSRead(DataSnapshot data, Reader read) {
-    return Homeroom.fromDS(data)..read = read;
+  factory Homeroom.fromDSRead(
+      DataSnapshot data, StreamProviderRef<Homeroom> ref) {
+    return Homeroom.fromDS(data)..ref = ref;
   }
 
   static Stream<Iterable<Homeroom>> all() {
@@ -40,8 +41,8 @@ class Homeroom {
   }
 
   Future<Iterable<Student>> students() async {
-    if (read == null) return [];
-    final students = await read!(studentsProvider.future);
+    if (ref == null) return [];
+    final students = await ref!.read(studentsProvider.future);
     return studentIds.map((id) => students.firstWhere((s) => s.id == id));
   }
 
@@ -53,11 +54,12 @@ class Homeroom {
   }
 }
 
-final homeroomProvider = StreamProvider.family<Homeroom, String>((ref, id) {
+final homeroomProvider =
+    StreamProvider.family<Homeroom, String>((homeroomRef, id) {
   return FirebaseDatabase.instance
       .ref('homerooms/$id')
       .onValue
-      .map((event) => Homeroom.fromDSRead(event.snapshot, ref.read));
+      .map((event) => Homeroom.fromDSRead(event.snapshot, homeroomRef));
 });
 
 final homeroomsProvider =
