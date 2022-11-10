@@ -11,14 +11,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _homerooms = Homeroom.all();
-  late Future<Iterable<Student>> _students;
+  final Future<Iterable<Student>> _students = Student.allOnce();
   static const wait = Center(child: CircularProgressIndicator());
-
-  @override
-  void initState() {
-    super.initState();
-    _students = Student.allOnce();
-  }
 
   @override
   build(BuildContext context) {
