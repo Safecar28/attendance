@@ -11,6 +11,7 @@ part 'screens/home_page.dart';
 part 'screens/student_page.dart';
 part 'widgets/homeroom_list.dart';
 part 'widgets/student_list.dart';
+part 'widgets/wait.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -12,7 +12,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _homerooms = Homeroom.all();
   final Future<Iterable<Student>> _students = Student.allOnce();
-  static const wait = Center(child: CircularProgressIndicator());
 
   @override
   build(BuildContext context) {
@@ -20,20 +19,13 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           title: Text(widget.title),
         ),
-        body: FutureBuilder<Iterable<Student>>(
-            future: _students,
+        body: StreamBuilder<Iterable<Homeroom>>(
+            stream: _homerooms,
             builder: (context, snapshot) {
-              if (!snapshot.hasData) return wait;
+              if (!snapshot.hasData) return const Wait();
 
-              var students = snapshot.data!;
-              return StreamBuilder<Iterable<Homeroom>>(
-                  stream: _homerooms,
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData) return wait;
-
-                    final data = snapshot.data!;
-                    return HomeroomList(homerooms: data, students: students);
-                  });
+              return HomeroomList(
+                  homerooms: snapshot.data!, students: _students);
             }));
   }
 }
