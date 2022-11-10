@@ -29,7 +29,8 @@ void main() async {
     await Firebase.initializeApp(
         name: 'Attendances', options: DefaultFirebaseOptions.currentPlatform);
     FirebaseDatabase.instance.databaseURL =
-        'https://attendance-653e9-default-rtdb.asia-southeast1.firebasedatabase.app';
+        // 'https://attendance-653e9-default-rtdb.asia-southeast1.firebasedatabase.app';
+        'https://dev-cois-attendance-default-rtdb.asia-southeast1.firebasedatabase.app';
   } else {
     await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform);
