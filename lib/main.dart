@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage> {
               final homeroom = _homerooms.elementAt(index);
               return ListTile(
                 title: Text(homeroom.name),
-                subtitle: Text(homeroom.studentIds.length.toString()),
+                subtitle: Text("${homeroom.studentIds.length} students"),
               );
             })
         // This trailing comma makes auto-formatting nicer for build methods.
