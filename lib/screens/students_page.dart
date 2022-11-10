@@ -21,14 +21,8 @@ class StudentsPage extends ConsumerWidget {
                 title: Text("${homeroom.name} Students"),
                 actions: [
                   IconButton(
-                    icon: const Icon(Icons.text_increase_outlined),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              fullscreenDialog: true,
-                              builder: (context) => const AttendancePage()));
-                    },
+                    icon: const Icon(Icons.person_add),
+                    onPressed: () {},
                   )
                 ],
               ),

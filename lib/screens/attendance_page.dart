@@ -1,14 +1,16 @@
 part of '../main.dart';
 
 class AttendancePage extends StatefulWidget {
-  const AttendancePage({Key? key}) : super(key: key);
+  const AttendancePage({Key? key, required this.student}) : super(key: key);
+
+  final Student student;
 
   @override
   State<AttendancePage> createState() => _AttendancePageState();
 }
 
 class _AttendancePageState extends State<AttendancePage> {
-  DateTime? _selectedDate;
+  DateTime _selectedDate = DateTime.now();
 
   void _presentDatePicker() {
     showDatePicker(
@@ -28,8 +30,9 @@ class _AttendancePageState extends State<AttendancePage> {
 
   @override
   Widget build(BuildContext context) {
+    final s = widget.student;
     return Scaffold(
-      appBar: AppBar(title: const Text("Take Attendnace")),
+      appBar: AppBar(title: Text(s.name())),
       body: Center(
           child: Column(
         children: [
@@ -43,7 +46,5 @@ class _AttendancePageState extends State<AttendancePage> {
     );
   }
 
-  String _displayDate() => _selectedDate != null
-      ? DateFormat("dd MMM ’yy").format(_selectedDate!)
-      : "Select Date";
+  String _displayDate() => DateFormat("dd MMM ’yy").format(_selectedDate);
 }

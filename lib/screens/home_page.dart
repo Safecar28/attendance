@@ -15,7 +15,7 @@ class HomePage extends ConsumerWidget {
               title: Text(title),
               actions: [
                 IconButton(
-                  icon: const Icon(Icons.person_add),
+                  icon: const Icon(Icons.add_home),
                   onPressed: () {},
                 ),
               ],

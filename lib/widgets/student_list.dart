@@ -19,7 +19,15 @@ class StudentList extends StatelessWidget {
               child: ListTile(
                 title: Text(student.name()),
                 subtitle: Text("# ${index + 1}"),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          fullscreenDialog: true,
+                          builder: (context) => AttendancePage(
+                                student: student,
+                              )));
+                },
               ));
         });
   }
