@@ -15,7 +15,7 @@ class HomeroomList extends StatelessWidget {
     if (homerooms.isEmpty) {
       return EmptyListMessage(
         name: 'homeroom',
-        message: 'School needs homerooms to study',
+        message: 'Generate your first homeroom!',
         onPressed: add,
       );
     }

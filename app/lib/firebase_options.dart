@@ -50,25 +50,22 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyC21CnNWUO3ZECgP1b46TSm3iPDQkTvtEE',
-    appId: '1:726228436483:android:4a40bfae5581bfc4837036',
-    messagingSenderId: '726228436483',
-    projectId: 'attendance-653e9',
-    databaseURL:
-        'https://attendance-653e9-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'attendance-653e9.appspot.com',
+    apiKey: 'AIzaSyCt4_WWFDHteYVrSj2-H8YPEyvZTXRLCdo',
+    appId: '1:404739700685:android:cd4c3417edd4dee1187684',
+    messagingSenderId: '404739700685',
+    projectId: 'dev-cois-attendance',
+    databaseURL: 'https://dev-cois-attendance-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'dev-cois-attendance.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBX5HYQMnxgbiQQPfm_0ckJxRhupBzLQZA',
-    appId: '1:726228436483:ios:0ff01c0a15c34940837036',
-    messagingSenderId: '726228436483',
-    projectId: 'attendance-653e9',
-    databaseURL:
-        'https://attendance-653e9-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'attendance-653e9.appspot.com',
-    iosClientId:
-        '726228436483-fcbujt4kj67t1dpdppfq0sc641nt6bh7.apps.googleusercontent.com',
-    iosBundleId: 'com.example.attendance',
+    apiKey: 'AIzaSyDhmtyCb4GsXw1wROYp7Cp8sQV4--gbqgw',
+    appId: '1:404739700685:ios:58db7ae315cf92f5187684',
+    messagingSenderId: '404739700685',
+    projectId: 'dev-cois-attendance',
+    databaseURL: 'https://dev-cois-attendance-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'dev-cois-attendance.appspot.com',
+    iosClientId: '404739700685-jonoh1n5arno8j4ontok7dch2no8snbk.apps.googleusercontent.com',
+    iosBundleId: 'com.niketpatel.attendance',
   );
 }
