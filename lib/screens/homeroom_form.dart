@@ -23,7 +23,7 @@ class _HomeroomFormState extends ConsumerState<HomeroomForm> {
 
   void setName(String val) {
     setState(() {
-      _name = val;
+      _name = val.trim();
     });
   }
 
@@ -35,10 +35,7 @@ class _HomeroomFormState extends ConsumerState<HomeroomForm> {
         actions: [
           IconButton(
               onPressed: () {
-                final id = widget.id ?? homeroomID();
-                FirebaseDatabase.instance
-                    .ref("homerooms/$id/name")
-                    .set(_name)
+                Homeroom.upsertHomeroom(widget.id, _name)
                     .then((value) => Navigator.pop(context))
                     .onError((error, stackTrace) => print(error));
               },

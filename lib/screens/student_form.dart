@@ -35,13 +35,13 @@ class _StudentFormState extends ConsumerState<StudentForm> {
 
   void setFirstName(String val) {
     setState(() {
-      _firstName = val;
+      _firstName = val.trim();
     });
   }
 
   void setLastName(String val) {
     setState(() {
-      _lastName = val;
+      _lastName = val.trim();
     });
   }
 
@@ -54,15 +54,10 @@ class _StudentFormState extends ConsumerState<StudentForm> {
         actions: [
           IconButton(
               onPressed: () {
-                final id = widget.id ?? studentID();
-                FirebaseDatabase.instance
-                    .ref("students/$id")
-                    .set({'id': id, 'name': _firstName, 'lastName': _lastName})
+                Student.upsertStudent(
+                        widget.id, _firstName, _lastName, widget.homeroom)
                     .then((value) => Navigator.pop(context))
                     .onError((error, stackTrace) => print(error));
-                FirebaseDatabase.instance
-                    .ref("homerooms/${widget.homeroom.id}/students")
-                    .set([...widget.homeroom.studentIds, id]);
               },
               icon: const Icon(Icons.save_rounded))
         ],

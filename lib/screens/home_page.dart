@@ -5,6 +5,16 @@ class HomePage extends ConsumerWidget {
 
   final String title;
 
+  void Function() addHomeroom(BuildContext context) {
+    return () {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              fullscreenDialog: true,
+              builder: (context) => const HomeroomForm()));
+    };
+  }
+
   @override
   build(context, ref) => ref.watch(homeroomsProvider).when(
       loading: () => const Wait(),
@@ -16,16 +26,13 @@ class HomePage extends ConsumerWidget {
               actions: [
                 IconButton(
                   icon: const Icon(Icons.add_home),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            fullscreenDialog: true,
-                            builder: (context) => const HomeroomForm()));
-                  },
+                  onPressed: addHomeroom(context),
                 ),
               ],
             ),
-            body: HomeroomList(homerooms: homerooms));
+            body: HomeroomList(
+              homerooms: homerooms,
+              add: addHomeroom(context),
+            ));
       });
 }

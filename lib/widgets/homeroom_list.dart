@@ -3,36 +3,19 @@ part of '../main.dart';
 class HomeroomList extends StatelessWidget {
   const HomeroomList({
     Key? key,
+    required this.add,
     required this.homerooms,
   }) : super(key: key);
 
+  final void Function() add;
   final Iterable<Homeroom> homerooms;
 
   @override
   Widget build(context) {
     if (homerooms.isEmpty) {
-      return Column(
-        children: [
-          const Center(
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 20),
-              child: Text("No Homerooms!"),
-            ),
-          ),
-          Center(
-            child: ElevatedButton(
-                child: const Text("Add your first homeroom"),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          fullscreenDialog: true,
-                          builder: (context) => const HomeroomForm()));
-                }),
-          )
-        ],
-      );
+      return EmptyListMessage(name: 'homeroom', onPressed: add);
     }
+
     return ListView.builder(
         itemCount: homerooms.length,
         itemBuilder: (context, index) {

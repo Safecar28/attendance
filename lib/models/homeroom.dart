@@ -1,15 +1,5 @@
 part of models;
 
-final homeroomProvider = StreamProvider.family<Homeroom, String>((ref, id) {
-  return FirebaseDatabase.instance
-      .ref('homerooms/$id')
-      .onValue
-      .map((event) => Homeroom.fromDSRead(event.snapshot, ref.read));
-});
-
-final homeroomsProvider =
-    StreamProvider<Iterable<Homeroom>>((ref) => Homeroom.all());
-
 class Homeroom {
   String id;
   String name;
@@ -42,4 +32,23 @@ class Homeroom {
     final students = await read!(studentsProvider.future);
     return students.where((std) => studentIds.any((id) => id == std.id));
   }
+
+  static Future<void> upsertHomeroom(String? id, String name) {
+    id = id ?? homeroomID();
+    return FirebaseDatabase.instance.ref("homerooms/$id/name").set(name);
+  }
+}
+
+final homeroomProvider = StreamProvider.family<Homeroom, String>((ref, id) {
+  return FirebaseDatabase.instance
+      .ref('homerooms/$id')
+      .onValue
+      .map((event) => Homeroom.fromDSRead(event.snapshot, ref.read));
+});
+
+final homeroomsProvider =
+    StreamProvider<Iterable<Homeroom>>((ref) => Homeroom.all());
+
+String homeroomID() {
+  return customAlphabet('1234567890-', 7);
 }

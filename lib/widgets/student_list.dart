@@ -5,13 +5,27 @@ class StudentList extends StatelessWidget {
     Key? key,
     required this.students,
     required this.homeroom,
+    required this.add,
   }) : super(key: key);
 
   final Iterable<Student> students;
   final Homeroom homeroom;
+  final void Function() add;
+
+  addStudent(context) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            fullscreenDialog: true,
+            builder: (context) => StudentForm(homeroom: homeroom)));
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (students.isEmpty) {
+      return EmptyListMessage(name: 'student', onPressed: add);
+    }
+
     return ListView.builder(
         itemCount: students.length,
         itemBuilder: (context, index) {
@@ -44,5 +58,34 @@ class StudentList extends StatelessWidget {
                 },
               ));
         });
+  }
+}
+
+class EmptyListMessage extends StatelessWidget {
+  const EmptyListMessage({
+    Key? key,
+    required this.name,
+    required this.onPressed,
+  }) : super(key: key);
+
+  final String name;
+  final void Function() onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: Text("No ${name}s!"),
+          ),
+        ),
+        Center(
+          child: ElevatedButton(
+              onPressed: onPressed, child: Text("Add your first $name")),
+        )
+      ],
+    );
   }
 }

@@ -25,5 +25,23 @@ class Student {
         .map((event) => event.snapshot.children.map((e) => Student.fromDS(e)));
   }
 
+  static Future<List<void>> upsertStudent(
+      String? id, firstName, lastName, Homeroom homeroom) {
+    id = id ?? studentID();
+
+    final s = FirebaseDatabase.instance
+        .ref("students/$id")
+        .set({'id': id, 'name': firstName, 'lastName': lastName});
+
+    final h = FirebaseDatabase.instance
+        .ref("homerooms/${homeroom.id}/students")
+        .set([...homeroom.studentIds, id]);
+    return Future.wait([s, h]);
+  }
+
   String name() => "$firstName  $lastName";
+}
+
+String studentID() {
+  return customAlphabet('1234567890-', 12);
 }

@@ -8,6 +8,18 @@ class StudentsPage extends ConsumerWidget {
 
   final String homeroomId;
 
+  void Function() addStudent(BuildContext context, Homeroom homeroom) {
+    return () {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              fullscreenDialog: true,
+              builder: (context) => StudentForm(
+                    homeroom: homeroom,
+                  )));
+    };
+  }
+
   @override
   build(context, ref) {
     final homeroom = ref.watch(homeroomProvider(homeroomId));
@@ -22,15 +34,7 @@ class StudentsPage extends ConsumerWidget {
                 actions: [
                   IconButton(
                     icon: const Icon(Icons.person_add),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              fullscreenDialog: true,
-                              builder: (context) => StudentForm(
-                                    homeroom: homeroom,
-                                  )));
-                    },
+                    onPressed: addStudent(context, homeroom),
                   )
                 ],
               ),
@@ -41,6 +45,7 @@ class StudentsPage extends ConsumerWidget {
                     return StudentList(
                       students: snapshot.data!,
                       homeroom: homeroom,
+                      add: addStudent(context, homeroom),
                     );
                   })
               // This trailing comma makes auto-formatting nicer for build methods.

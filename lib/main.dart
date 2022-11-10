@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:attendance/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -6,7 +7,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:nanoid/nanoid.dart';
 
 import 'models/models.dart';
 
@@ -23,12 +23,15 @@ part 'widgets/wait_err.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  if (Firebase.apps.isEmpty) {
+  if (Platform.isAndroid && Firebase.apps.isEmpty) {
     await Firebase.initializeApp(
         name: 'Attendances', options: DefaultFirebaseOptions.currentPlatform);
+    FirebaseDatabase.instance.databaseURL =
+        "https://attendance-653e9-default-rtdb.asia-southeast1.firebasedatabase.app";
+  } else {
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform);
   }
-  FirebaseDatabase.instance.databaseURL =
-      "https://attendance-653e9-default-rtdb.asia-southeast1.firebasedatabase.app";
   runApp(const ProviderScope(
     child: AttendanceApp(),
   ));
@@ -62,12 +65,4 @@ Future<void> debugDB() async {
   //     Student.fromDS(await studentsRef.child(dp1.studentIds.first).get());
 
   // print("${student.name()}!");
-}
-
-String studentID() {
-  return customAlphabet('1234567890', 10);
-}
-
-String homeroomID() {
-  return customAlphabet('1234567890', 5);
 }
