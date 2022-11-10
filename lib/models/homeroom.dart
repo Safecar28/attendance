@@ -46,7 +46,7 @@ class Homeroom {
   static Future<void> upsertHomeroom(String? id, String name) {
     id = id ?? homeroomID();
     return FirebaseDatabase.instance
-        .ref("homerooms/$id")
+        .ref('homerooms/$id')
         .update({'name': name});
   }
 }

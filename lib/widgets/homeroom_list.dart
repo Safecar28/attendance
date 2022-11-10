@@ -33,7 +33,7 @@ class HomeroomList extends StatelessWidget {
                 trailing: const Icon(Icons.arrow_forward_ios_outlined),
                 title: Text(h.name),
                 textColor: Colors.black87,
-                subtitle: Text("$num students"),
+                subtitle: Text('$num students'),
                 onTap: () {
                   Navigator.push(
                       context,

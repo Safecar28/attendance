@@ -38,7 +38,7 @@ class StudentList extends StatelessWidget {
               key: Key(student.id),
               child: ListTile(
                 title: Text(student.name()),
-                subtitle: Text("# ${index + 1}"),
+                subtitle: Text('# ${index + 1}'),
                 onTap: () {
                   Navigator.push(
                       context,
