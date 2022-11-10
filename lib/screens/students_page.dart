@@ -29,6 +29,7 @@ class StudentsPage extends ConsumerWidget {
         error: (err, stack) => Err(err: err),
         data: (homeroom) {
           return Scaffold(
+              backgroundColor: Theme.of(context).backgroundColor,
               appBar: AppBar(
                 title: Text("${homeroom.name} Students"),
                 actions: [

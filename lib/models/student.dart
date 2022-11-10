@@ -34,7 +34,8 @@ class Student {
     if (creating) {
       FirebaseDatabase.instance
           .ref("homerooms/${homeroom.id}/students")
-          .update({id: true});
+          .push()
+          .set(id);
     }
 
     return FirebaseDatabase.instance
@@ -43,8 +44,10 @@ class Student {
   }
 
   Future<void> removeFrom(Homeroom h) {
+    final key = h.studentMap?.entries.firstWhere((e) => e.value == id).key;
+
     return FirebaseDatabase.instance
-        .ref("homerooms/${h.id}/students/$id")
+        .ref("homerooms/${h.id}/students/${key ?? '-'}")
         .remove();
   }
 
@@ -52,5 +55,5 @@ class Student {
 }
 
 String studentID() {
-  return customAlphabet(nanoIdChars, 7);
+  return "st-${customAlphabet(nanoIdChars, 7)}";
 }

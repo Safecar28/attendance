@@ -21,6 +21,7 @@ class HomePage extends ConsumerWidget {
       error: (err, stack) => Err(err: err),
       data: (homerooms) {
         return Scaffold(
+            backgroundColor: Theme.of(context).backgroundColor,
             appBar: AppBar(
               title: Text(title),
               actions: [

@@ -7,4 +7,4 @@ import 'package:nanoid/nanoid.dart';
 part 'homeroom.dart';
 part 'student.dart';
 
-const nanoIdChars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+const nanoIdChars = 'abcdeghijklmnopqrstuvwyz';
