@@ -22,7 +22,13 @@ class StudentsPage extends ConsumerWidget {
                 actions: [
                   IconButton(
                     icon: const Icon(Icons.person_add),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              fullscreenDialog: true,
+                              builder: (context) => const StudentForm()));
+                    },
                   )
                 ],
               ),

@@ -11,6 +11,7 @@ import 'models/models.dart';
 part 'screens/home_page.dart';
 part 'screens/students_page.dart';
 part 'screens/attendance_page.dart';
+part 'screens/student_form.dart';
 
 part 'widgets/homeroom_list.dart';
 part 'widgets/student_list.dart';

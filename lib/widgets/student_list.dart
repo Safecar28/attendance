@@ -28,6 +28,17 @@ class StudentList extends StatelessWidget {
                                 student: student,
                               )));
                 },
+                onLongPress: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          fullscreenDialog: true,
+                          builder: (context) => StudentForm(
+                                id: student.id,
+                                firstName: student.firstName,
+                                lastName: student.lastName,
+                              )));
+                },
               ));
         });
   }
