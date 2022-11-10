@@ -1,16 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
-import 'package:firebase_database/firebase_database.dart';
 
 void main() async {
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const AttendanceApp());
-  FirebaseDatabase database = FirebaseDatabase.instance;
-  DatabaseReference ref = database.ref('');
-  await ref.set({});
 }
 
 class AttendanceApp extends StatelessWidget {
