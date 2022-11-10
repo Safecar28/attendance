@@ -43,7 +43,7 @@ class HomePage extends ConsumerWidget {
                       child: const Text(
                         'Reports and settings',
                         textScaleFactor: 1.6,
-                        style: TextStyle(color: Colors.white24),
+                        style: TextStyle(color: Colors.white70),
                       ),
                     ),
                   ),
