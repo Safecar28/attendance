@@ -15,6 +15,7 @@ class StudentList extends StatelessWidget {
         itemBuilder: (context, index) {
           final student = students.elementAt(index);
           return ListTile(
+            key: Key(student.id),
             title: Text(student.name()),
           );
         });
