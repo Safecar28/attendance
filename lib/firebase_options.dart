@@ -63,7 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '726228436483',
     projectId: 'attendance-653e9',
     storageBucket: 'attendance-653e9.appspot.com',
-    iosClientId: '726228436483-fcbujt4kj67t1dpdppfq0sc641nt6bh7.apps.googleusercontent.com',
+    iosClientId:
+        '726228436483-fcbujt4kj67t1dpdppfq0sc641nt6bh7.apps.googleusercontent.com',
     iosBundleId: 'com.example.attendance',
   );
 }
