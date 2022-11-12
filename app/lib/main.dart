@@ -6,10 +6,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart' hide TextDirection;
 import 'package:fl_chart/fl_chart.dart';
+// The import below is required for the Firebase Authentication UI to work.
+// ignore: unused_import
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart' as auth_ui;
 
 import 'package:attendance/models/models.dart';
@@ -49,28 +50,13 @@ void main() async {
 class AttendanceApp extends StatelessWidget {
   const AttendanceApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
+  // The root of the application.
   @override
   build(context) {
     return MaterialApp(
       title: 'Attendance App',
-      theme: ThemeData(
-        primarySwatch: Colors.indigo,
-      ),
-      home: Login(),
+      theme: ThemeData(primarySwatch: Colors.indigo),
+      home: const Login(),
     );
   }
 }
-
-// Future<void> debugDB() async {
-  // final dp1 = Homeroom.fromDS(
-  //     await FirebaseDatabase.instance.ref('homerooms/dp1').get());
-
-  // print("${dp1.name} has ${dp1.studentIds.length} students!");
-
-  // final studentsRef = FirebaseDatabase.instance.ref('students');
-  // final student =
-  //     Student.fromDS(await studentsRef.child(dp1.studentIds.first).get());
-
-  // print("${student.name()}!");
-// }

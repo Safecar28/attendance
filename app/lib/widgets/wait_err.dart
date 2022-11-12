@@ -1,5 +1,6 @@
 part of '../main.dart';
 
+/// A widget that displays a [CircularProgressIndicator] while waiting for data.
 class Wait extends StatelessWidget {
   const Wait({
     Key? key,
@@ -11,6 +12,7 @@ class Wait extends StatelessWidget {
   }
 }
 
+///To err is human; to forgive divine.
 class Err extends StatelessWidget {
   const Err({Key? key, required this.err}) : super(key: key);
 

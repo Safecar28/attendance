@@ -65,7 +65,6 @@ final homeroomProvider =
 final homeroomsProvider =
     StreamProvider<Iterable<Homeroom>>((ref) => Homeroom.all());
 
-// using timestamp to keep them sorted
-String homeroomID() {
-  return 'hr-${(DateTime.now().millisecondsSinceEpoch / 100).floor()}';
-}
+///using timestamp to keep homerooms sorted
+String homeroomID() =>
+    'hr-${(DateTime.now().millisecondsSinceEpoch / 100).floor()}';
