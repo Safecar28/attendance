@@ -26,7 +26,10 @@ class StudentsPage extends ConsumerWidget {
 
     return homeroom.when(
         loading: () => const Wait(),
-        error: (err, stack) => Err(err: err),
+        error: (err, stack) => Err(
+              err: err,
+              stack: stack,
+            ),
         data: (homeroom) {
           return Scaffold(
               backgroundColor: Theme.of(context).backgroundColor,

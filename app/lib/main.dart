@@ -11,7 +11,7 @@ import 'package:fl_chart/fl_chart.dart';
 // The import below is required for the Firebase Authentication UI to work.
 // ignore: unused_import
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_ui_auth/firebase_ui_auth.dart' as auth_ui;
+import 'package:firebase_ui_auth/firebase_ui_auth.dart' as authui;
 
 import 'package:attendance/models/models.dart';
 
@@ -56,7 +56,12 @@ class AttendanceApp extends StatelessWidget {
     return MaterialApp(
       title: 'Attendance App',
       theme: ThemeData(primarySwatch: Colors.indigo),
-      home: const Login(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const Login(),
+        '/homepage': (context) => const HomePage(title: 'Attendance')
+      },
+      // home: const Login(),
     );
   }
 }

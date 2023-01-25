@@ -74,7 +74,7 @@ class EmptyListMessage extends StatelessWidget {
 
   final String name;
   final String? message;
-  final void Function() onPressed;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +96,27 @@ class EmptyListMessage extends StatelessWidget {
               onPressed: onPressed, child: Text('Add your first $name')),
         )
       ],
+    );
+  }
+}
+
+class StudentCard extends StatelessWidget {
+  final Student student;
+  const StudentCard(this.student, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(4.0)),
+      child: FutureBuilder(
+        future: Student.photoFromId(student.id),
+        builder: (context, AsyncSnapshot<Image> snapshot) {
+          return snapshot.hasData
+              ? snapshot.data!
+              : Image.asset('images/placeholder.png');
+        },
+      ),
     );
   }
 }

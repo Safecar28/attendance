@@ -14,12 +14,15 @@ class Wait extends StatelessWidget {
 
 ///To err is human; to forgive divine.
 class Err extends StatelessWidget {
-  const Err({Key? key, required this.err}) : super(key: key);
+  const Err({Key? key, required this.err, required this.stack})
+      : super(key: key);
 
   final Object err;
+  final Object stack;
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('Error: $err'));
+    return Center(
+        child: Column(children: [Text('Error: $err'), Text('Stack: $stack')]));
   }
 }

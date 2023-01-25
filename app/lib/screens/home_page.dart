@@ -5,20 +5,21 @@ class HomePage extends ConsumerWidget {
 
   final String title;
 
-  void Function() addHomeroom(BuildContext context) {
-    return () {
-      Navigator.push(
-          context,
-          MaterialPageRoute<Widget>(
-              fullscreenDialog: true,
-              builder: (context) => const HomeroomForm()));
-    };
-  }
+  VoidCallback addHomeroom(BuildContext context) => () {
+        Navigator.push(
+            context,
+            MaterialPageRoute<Widget>(
+                fullscreenDialog: true,
+                builder: (context) => const HomeroomForm()));
+      };
 
   @override
   build(context, ref) => ref.watch(homeroomsProvider).when(
       loading: () => const Wait(),
-      error: (err, stack) => Err(err: err),
+      error: (err, stack) => Err(
+            err: err,
+            stack: stack,
+          ),
       data: (homerooms) {
         return Scaffold(
             backgroundColor: Theme.of(context).backgroundColor,
