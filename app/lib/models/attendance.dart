@@ -5,10 +5,8 @@ enum AttendanceType {
   holiday,
   absent,
   excused,
-  present,
-}
+  present;
 
-extension AttendanceTypeExt on AttendanceType {
   String get title {
     switch (this) {
       case AttendanceType.excused:
@@ -50,7 +48,7 @@ class Attendance {
       {required this.id, this.status = AttendanceType.none, this.reason = ''});
 
   factory Attendance.empty() {
-    return Attendance(id: attendanceId());
+    return Attendance(id: attendanceId);
   }
 
   final String id;
@@ -75,9 +73,7 @@ class Attendance {
   }
 }
 
-String attendanceId() {
-  return 'att-${customAlphabet(nanoIdChars, 12)}';
-}
+String get attendanceId => 'att-${customAlphabet(nanoIdChars, 12)}';
 
 class AttendanceNotifier extends StateNotifier<Attendance> {
   AttendanceNotifier(Attendance a) : super(a);

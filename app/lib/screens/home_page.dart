@@ -22,7 +22,7 @@ class HomePage extends ConsumerWidget {
           ),
       data: (homerooms) {
         return Scaffold(
-            backgroundColor: Theme.of(context).backgroundColor,
+            backgroundColor: Theme.of(context).colorScheme.background,
             appBar: AppBar(
               title: Text(title),
               actions: [
