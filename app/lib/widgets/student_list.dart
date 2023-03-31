@@ -100,23 +100,23 @@ class EmptyListMessage extends StatelessWidget {
   }
 }
 
-class StudentCard extends StatelessWidget {
-  final Student student;
-  const StudentCard(this.student, {super.key});
+// class StudentCard extends StatelessWidget {
+//   final Student student;
+//   const StudentCard(this.student, {super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      clipBehavior: Clip.antiAlias,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(4.0)),
-      child: FutureBuilder(
-        future: Student.photoFromId(student.id),
-        builder: (context, AsyncSnapshot<Image> snapshot) {
-          return snapshot.hasData
-              ? snapshot.data!
-              : Image.asset('images/placeholder.png');
-        },
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       clipBehavior: Clip.antiAlias,
+//       decoration: BoxDecoration(borderRadius: BorderRadius.circular(4.0)),
+//       child: FutureBuilder(
+//         future: Student.photoFromId(student.id),
+//         builder: (context, AsyncSnapshot<Image> snapshot) {
+//           return snapshot.hasData
+//               ? snapshot.data!
+//               : Image.asset('images/placeholder.png');
+//         },
+//       ),
+//     );
+//   }
+// }

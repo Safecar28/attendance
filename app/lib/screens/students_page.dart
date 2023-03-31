@@ -32,7 +32,7 @@ class StudentsPage extends ConsumerWidget {
             ),
         data: (homeroom) {
           return Scaffold(
-              backgroundColor: Theme.of(context).backgroundColor,
+              backgroundColor: Theme.of(context).colorScheme.background,
               appBar: AppBar(
                 title: Text('${homeroom.name} Students'),
                 actions: [

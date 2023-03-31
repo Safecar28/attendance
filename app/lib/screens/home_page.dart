@@ -49,17 +49,6 @@ class HomePage extends ConsumerWidget {
                     ),
                   ),
                   ListTile(
-                    leading: const Icon(Icons.data_exploration_outlined),
-                    title: const Text('Monthly'),
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute<Widget>(
-                              fullscreenDialog: true,
-                              builder: (context) => const ReportPage()));
-                    },
-                  ),
-                  ListTile(
                     leading: const Icon(Icons.grid_goldenratio_outlined),
                     title: const Text('Yearly'),
                     onTap: () {

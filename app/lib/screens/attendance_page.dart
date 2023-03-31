@@ -21,7 +21,8 @@ class AttendancePage extends ConsumerWidget {
   Widget build(context, ref) {
     final student = ref.watch(currentStudent);
     final state = ref.watch(currentAttendance);
-    final choices = AttendanceType.values.map((e) => AttendanceRadio(kind: e));
+    final choices =
+        AttendanceType.values.map((e) => AttendanceRadio(attendanceType: e));
     return Scaffold(
       appBar: AppBar(title: Text(student.name())),
       body: SingleChildScrollView(
@@ -53,7 +54,9 @@ class AttendancePage extends ConsumerWidget {
     final color = text == 'Previous' ? Colors.red : Colors.green;
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-            primary: color, minimumSize: const Size(120, 40), elevation: 0.9),
+            backgroundColor: color,
+            minimumSize: const Size(120, 40),
+            elevation: 0.9),
         onPressed: () {
           att.upsert(s, date).then((_) {
             final idx = students.indexOf(s) + move;
@@ -73,22 +76,22 @@ class AttendancePage extends ConsumerWidget {
 class AttendanceRadio extends ConsumerWidget {
   const AttendanceRadio({
     Key? key,
-    required this.kind,
+    required this.attendanceType,
   }) : super(key: key);
 
-  final AttendanceType kind;
+  final AttendanceType attendanceType;
 
   @override
   Widget build(context, ref) {
     var current = ref.watch(currentAttendance);
     final notify = ref.read(currentAttendance.notifier);
     return ListTile(
-      title: Text(kind.title),
-      onTap: () => notify.update(status: kind),
+      title: Text(attendanceType.title),
+      onTap: () => notify.update(status: attendanceType),
       leading: Radio<AttendanceType>(
-        value: kind,
+        value: attendanceType,
         groupValue: current.status,
-        onChanged: (_) => notify.update(status: kind),
+        onChanged: (_) => notify.update(status: attendanceType),
       ),
     );
   }

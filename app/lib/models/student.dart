@@ -1,59 +1,27 @@
 part of models;
 
-final studentsProvider = StreamProvider<Iterable<Student>>((ref) {
-  return Student.allOnce();
-});
-
 class Student {
   String id;
   String firstName;
   String lastName;
-  Image? photo;
 
-  Student({this.id = '', this.firstName = '', this.lastName = '', this.photo});
+  Student({this.id = '', this.firstName = '', this.lastName = ''});
 
   factory Student.fromDS(
     DataSnapshot dbData,
-    // [DataSnapshot? storageData,]
   ) {
     return Student(
       id: (dbData.key as String),
       firstName: (dbData.child('firstName').value as String),
       lastName: (dbData.child('lastName').value as String),
-      // photo: storageData != null
-      //     ? Image.memory(storageData.value as Uint8List)
-      //     : Image.asset('images/placeholder.png'),
     );
   }
 
   static Stream<Iterable<Student>> allOnce() {
-    // var dbStudentData =
     return FirebaseDatabase.instance
         .ref('students')
         .onValue
         .map((event) => event.snapshot.children.map((e) => Student.fromDS(e)));
-    // var storageStudentData = FirebaseStorage.instance
-    //     .ref('student_photos')
-    //     .listAll()
-    //     .asStream()
-    //     .map((event) => event.items);
-    // dbStudentData.map((students) {
-    //   for (var student in students) {
-    //     storageStudentData.map((event) {
-    //       event.map((e) => student.photo = e.name.contains(student.id)
-    //           ? Image.memory(e.getData() as Uint8List)
-    //           : Image.asset('images/placeholder.png'));
-    //     });
-    //   }
-    // });
-    // return dbStudentData;
-  }
-
-  static Future<Image> photoFromId(String id) async {
-    return Image.memory((await FirebaseStorage.instance
-        .ref('student_photos')
-        .child(id)
-        .getData())!);
   }
 
   static Future<void> upsertStudent(
@@ -94,3 +62,7 @@ class Student {
 String studentID() {
   return 'st-${customAlphabet(nanoIdChars, 7)}';
 }
+
+final studentsProvider = StreamProvider<Iterable<Student>>((ref) {
+  return Student.allOnce();
+});

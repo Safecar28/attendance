@@ -7,7 +7,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart' hide TextDirection;
-import 'package:fl_chart/fl_chart.dart';
 // The import below is required for the Firebase Authentication UI to work.
 // ignore: unused_import
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,7 +19,6 @@ part 'screens/students_page.dart';
 part 'screens/attendance_page.dart';
 part 'screens/student_form.dart';
 part 'screens/homeroom_form.dart';
-part 'screens/reports_page.dart';
 part 'screens/login.dart';
 
 part 'widgets/homeroom_list.dart';
